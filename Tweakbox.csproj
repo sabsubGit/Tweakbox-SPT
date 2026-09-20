@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Tweakbox</AssemblyName>
+    <RootNamespace>Tweakbox</RootNamespace>
+    <ReleaseOutputDir>..\Build\SPT_Runtime\user\mods\Tweakbox\</ReleaseOutputDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SPTarkov.Common" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.DI" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Reflection" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Server.Core" Version="4.1.2" />
+    <PackageReference Include="SPTarkov.Server.Web" Version="4.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Client\ is the separate TweakboxClient.csproj (BepInEx side); the SDK's
+         default globs would otherwise pull its .cs files into this server build. -->
+    <Compile Remove="Client\**" />
+    <EmbeddedResource Remove="Client\**" />
+    <None Remove="Client\**" />
+  </ItemGroup>
+  <Target Name="CleanUnwantedFiles" AfterTargets="Build">
+    <ItemGroup>
+      <UnwantedFiles Include="$(OutputPath)*.pdb;$(OutputPath)*.deps.json;$(OutputPath)*.runtimeconfig.*" />
+    </ItemGroup>
+    <Delete Files="@(UnwantedFiles)" />
+  </Target>
+  <Target Name="CopyBuildOutput" AfterTargets="CleanUnwantedFiles">
+    <MakeDir Directories="$(ReleaseOutputDir)" />
+    <ItemGroup>
+      <RemainingFiles Include="$(OutputPath)**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(RemainingFiles)" DestinationFiles="@(RemainingFiles->'$(ReleaseOutputDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+</Project>

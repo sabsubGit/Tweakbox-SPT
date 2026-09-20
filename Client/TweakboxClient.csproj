@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <RootNamespace>TweakboxClient</RootNamespace>
+    <AssemblyName>TweakboxClient</AssemblyName>
+    <ReleaseOutputDir>..\..\Build\BepInEx\plugins\TweakboxClient\</ReleaseOutputDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.43" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\hollowed.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CopyBuildOutput" AfterTargets="Build">
+    <MakeDir Directories="$(ReleaseOutputDir)" />
+    <ItemGroup>
+      <OutFiles Include="$(OutputPath)TweakboxClient.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OutFiles)" DestinationFolder="$(ReleaseOutputDir)" />
+  </Target>
+</Project>

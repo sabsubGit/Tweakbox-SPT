@@ -1,0 +1,148 @@
+{
+  "fleaUnban": {
+    "enabled": true,
+    "items": [
+      {
+        "id": "5e848cc2988a8701445df1e8",
+        "fleaPrice": 48000
+      }
+    ]
+  },
+
+  // White flares are pure illumination (FlareTypes is empty - no airdrop, no
+  // extract trigger), which makes them the one flare worth carrying for night
+  // raids. Vanilla leaves them flea-only at ~21k base, so they were never worth
+  // buying. Jaeger sells them outright now, with the flea price cut to match.
+  "traderStock": {
+    "enabled": true,
+    "entries": [
+      {
+        "trader": "Jaeger",
+        "id": "62389bc9423ed1685422dc57",
+        "comment": "26x75mm flare cartridge (White) - SP-81 flare gun round",
+        "priceRub": 8129,
+        "loyaltyLevel": 1
+      },
+      {
+        "trader": "Jaeger",
+        "id": "62178be9d0050232da3485d9",
+        "comment": "ROP-30 reactive flare cartridge (White) - handheld, single use",
+        "priceRub": 10188,
+        "loyaltyLevel": 1
+      },
+      {
+        // Jaeger already lists this at LL2, but only as a barter for Aquapeps
+        // tablets - a ~27,000 RUB item traded for a 6,213 RUB flare, which is
+        // why nobody ever notices it. This is the same offer for cash, priced
+        // in line with his RSP-30 green at 6,019.
+        "trader": "Jaeger",
+        "id": "62389aaba63f32501b1b444f",
+        "comment": "26x75mm flare cartridge (Green) - SP-81 round, activates flare extracts",
+        "priceRub": 6524,
+        "loyaltyLevel": 2
+      }
+    ]
+  },
+
+  // Kept a little above Jaeger's price so the trader stays the better deal.
+  "fleaPrice": {
+    "enabled": true,
+    "entries": [
+      {
+        "id": "62389bc9423ed1685422dc57",
+        "comment": "26x75mm flare cartridge (White)",
+        "priceRub": 9000
+      },
+      {
+        "id": "62178be9d0050232da3485d9",
+        "comment": "ROP-30 reactive flare cartridge (White)",
+        "priceRub": 11000
+      }
+    ]
+  },
+
+  // Places items into static loot container pools. Needed for anything that
+  // never spawns at all - a loot multiplier can only scale pools an item is
+  // already in, so multiplying zero stays zero.
+  // "sharePercent" is recalculated per map against that map's real pool total.
+  "lootInjection": {
+    "enabled": true,
+    "entries": [
+      // ---- Thermal optics: none of these spawn anywhere in vanilla loot ----
+      {
+        "id": "5a1eaa87fcdbcb001865f75e",
+        "comment": "Trijicon REAP-IR thermal scope",
+        "sharePercent": 0.12,
+        "containers": ["WeaponCrate", "Safe", "PMC_dead"]
+      },
+      {
+        "id": "5d1b5e94d7ad1a2b865a96b0",
+        "comment": "FLIR RS-32 thermal riflescope",
+        "sharePercent": 0.15,
+        "containers": ["WeaponCrate", "Safe", "PMC_dead"]
+      },
+      {
+        "id": "63fc44e2429a8a166c7f61e6",
+        "comment": "Armasight Zeus-Pro 640 thermal scope",
+        "sharePercent": 0.15,
+        "containers": ["WeaponCrate", "Safe", "PMC_dead"]
+      },
+      {
+        "id": "67641b461c2eb66ade05dba6",
+        "comment": "Cyclone Shakhin 3.7x thermal scope",
+        "sharePercent": 0.15,
+        "containers": ["WeaponCrate", "Safe", "PMC_dead"]
+      },
+      {
+        "id": "6478641c19d732620e045e17",
+        "comment": "SIG Sauer ECHO1 thermal reflex sight",
+        "sharePercent": 0.2,
+        "containers": ["WeaponCrate", "Safe", "PMC_dead", "ToolBox"]
+      },
+      {
+        "id": "5c110624d174af029e69734c",
+        "comment": "T-7 Thermal Goggles (night raids)",
+        "sharePercent": 0.15,
+        "containers": ["Safe", "PMC_dead", "SportBag"]
+      },
+
+      // ---- Top-tier armour that currently never spawns ----
+      {
+        "id": "656fa99800d62bcd2e024088",
+        "comment": "Cult Termite ballistic plate (class 6)",
+        "sharePercent": 0.2,
+        "containers": ["Safe", "PMC_dead", "WeaponCrate"]
+      },
+      {
+        "id": "68a89146212dbbeead0d5636",
+        "comment": "NFM THOR Concealable Reinforced Vest (Heavy)",
+        "sharePercent": 0.15,
+        "containers": ["Safe", "PMC_dead", "SportBag"]
+      },
+      {
+        "id": "68a97093431252e29a02dc06",
+        "comment": "NPP KlASS Korund-VM body armor (Kamysh)",
+        "sharePercent": 0.15,
+        "containers": ["Safe", "PMC_dead", "SportBag"]
+      },
+      {
+        "id": "5b44cd8b86f774503d30cba2",
+        "comment": "IOTV Gen4 body armor (Full Protection)",
+        "sharePercent": 0.15,
+        "containers": ["Safe", "PMC_dead", "SportBag"]
+      },
+      {
+        "id": "66b5f65ca7f72d197e70bcd6",
+        "comment": "Bastion helmet (Armor Black)",
+        "sharePercent": 0.2,
+        "containers": ["Safe", "PMC_dead", "SportBag"]
+      },
+      {
+        "id": "68a986ca5c0073fa2d0d8cb8",
+        "comment": "Vulkan-5 LShZ-5 helmet (Eight-ball)",
+        "sharePercent": 0.15,
+        "containers": ["Safe", "PMC_dead"]
+      }
+    ]
+  }
+}
