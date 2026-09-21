@@ -62,9 +62,9 @@
   },
 
   // Flare-gun cartridges normally cannot stack (cap 1). The white one also carries a
-  // built-in loot roll of 3-15 that the server ignores only while the cap is 1, so it
-  // is pinned to singles here to keep finds exactly as they were - raise foundMax
-  // (up to maxStack) if you would rather find them in small packs.
+  // built-in loot roll of 3-15 that the server ignores only while the cap is 1, so the
+  // roll is set explicitly here: found in packs of 1-5 (both ends inclusive, average 3),
+  // never above the stack cap. Set foundMax to 1 to go back to single finds.
   "stackSize": {
     "enabled": true,
     "entries": [
@@ -73,7 +73,7 @@
         "comment": "26x75mm flare cartridge (White)",
         "maxStack": 5,
         "foundMin": 1,
-        "foundMax": 1
+        "foundMax": 5
       }
     ]
   },
