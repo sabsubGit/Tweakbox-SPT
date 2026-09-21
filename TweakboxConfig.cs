@@ -13,6 +13,9 @@ public sealed class TweakboxConfig
     [JsonPropertyName("fleaPrice")]
     public FleaPriceConfig FleaPrice { get; set; } = new();
 
+    [JsonPropertyName("stackSize")]
+    public StackSizeConfig StackSize { get; set; } = new();
+
     [JsonPropertyName("traderStock")]
     public TraderStockConfig TraderStock { get; set; } = new();
 }
@@ -135,4 +138,40 @@ public sealed class TraderStockEntry
     /// Purchases allowed per restock. Null means unlimited.
     [JsonPropertyName("buyRestrictionMax")]
     public int? BuyRestrictionMax { get; set; }
+}
+
+/// Changes how many of an item fit in one inventory stack. The change is made to
+/// the in-memory item template, which the server sends to every client on login,
+/// so nothing needs installing on the players' side.
+public sealed class StackSizeConfig
+{
+    [JsonPropertyName("enabled")]
+    public bool Enabled { get; set; } = true;
+
+    [JsonPropertyName("entries")]
+    public List<StackSizeEntry> Entries { get; set; } = [];
+}
+
+public sealed class StackSizeEntry
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = string.Empty;
+
+    [JsonPropertyName("comment")]
+    public string? Comment { get; set; }
+
+    /// Largest stack the item can form.
+    [JsonPropertyName("maxStack")]
+    public int MaxStack { get; set; } = 1;
+
+    /// Optional size range for copies that spawn as loot. Falls back to the item's
+    /// existing range when left out. Either way the result is clamped to maxStack:
+    /// the loot generators only skip their roll while the cap is exactly 1 and never
+    /// clamp it themselves, so an item whose range was written for a cap of 1 would
+    /// otherwise start spawning in over-full stacks the moment the cap is raised.
+    [JsonPropertyName("foundMin")]
+    public int? FoundMin { get; set; }
+
+    [JsonPropertyName("foundMax")]
+    public int? FoundMax { get; set; }
 }

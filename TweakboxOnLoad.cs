@@ -42,6 +42,7 @@ public sealed class TweakboxOnLoad(
         RunSafely("flea unban", () => ApplyFleaUnban(config.FleaUnban));
         RunSafely("loot injection", () => ApplyLootInjection(config.LootInjection));
         RunSafely("flea price", () => ApplyFleaPrice(config.FleaPrice));
+        RunSafely("stack size", () => ApplyStackSize(config.StackSize));
         RunSafely("trader stock", () => ApplyTraderStock(config.TraderStock));
         return Task.CompletedTask;
     }
@@ -71,6 +72,7 @@ public sealed class TweakboxOnLoad(
                 FleaUnban = { Enabled = false },
                 LootInjection = { Enabled = false },
                 FleaPrice = { Enabled = false },
+                StackSize = { Enabled = false },
                 TraderStock = { Enabled = false },
             };
         }
@@ -243,6 +245,45 @@ public sealed class TweakboxOnLoad(
             templateTable.Prices[tpl] = entry.PriceRub;
             logger.Success(
                 $"Tweakbox: flea price - {entry.Comment ?? item.Name} base price {old:N0} -> {entry.PriceRub:N0} RUB."
+            );
+        }
+    }
+
+    private void ApplyStackSize(StackSizeConfig config)
+    {
+        if (!config.Enabled || config.Entries.Count == 0)
+        {
+            return;
+        }
+
+        foreach (StackSizeEntry entry in config.Entries)
+        {
+            MongoId tpl = new(entry.Id);
+            if (!templateTable.Items.TryGetValue(tpl, out var item) || item.Properties == null)
+            {
+                logger.Warning($"Tweakbox: stack size - item {entry.Id} not in database, skipping.");
+                continue;
+            }
+
+            if (entry.MaxStack < 1)
+            {
+                logger.Warning($"Tweakbox: stack size - {item.Name} has maxStack {entry.MaxStack}, must be at least 1, skipping.");
+                continue;
+            }
+
+            var props = item.Properties;
+            var old = props.StackMaxSize;
+            props.StackMaxSize = entry.MaxStack;
+
+            // Keep the loot roll inside the new cap - see StackSizeEntry.FoundMin.
+            int foundMax = Math.Clamp((int)(entry.FoundMax ?? props.StackMaxRandom ?? 1), 1, entry.MaxStack);
+            int foundMin = Math.Clamp((int)(entry.FoundMin ?? props.StackMinRandom ?? 1), 1, foundMax);
+            props.StackMaxRandom = foundMax;
+            props.StackMinRandom = foundMin;
+
+            logger.Success(
+                $"Tweakbox: stack size - {entry.Comment ?? item.Name} now stacks to {entry.MaxStack} (was {old}); "
+                    + $"found in loot as {foundMin}-{foundMax}."
             );
         }
     }

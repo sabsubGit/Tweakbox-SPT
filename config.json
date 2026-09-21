@@ -61,6 +61,23 @@
     ]
   },
 
+  // Flare-gun cartridges normally cannot stack (cap 1). The white one also carries a
+  // built-in loot roll of 3-15 that the server ignores only while the cap is 1, so it
+  // is pinned to singles here to keep finds exactly as they were - raise foundMax
+  // (up to maxStack) if you would rather find them in small packs.
+  "stackSize": {
+    "enabled": true,
+    "entries": [
+      {
+        "id": "62389bc9423ed1685422dc57",
+        "comment": "26x75mm flare cartridge (White)",
+        "maxStack": 5,
+        "foundMin": 1,
+        "foundMax": 1
+      }
+    ]
+  },
+
   // Places items into static loot container pools. Needed for anything that
   // never spawns at all - a loot multiplier can only scale pools an item is
   // already in, so multiplying zero stays zero.

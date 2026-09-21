@@ -15,11 +15,14 @@ client plugin.
   vanilla.
 - **Flea price override** — replaces an item's base flea price. Currently: the two white
   flares, down from their default valuation to something sane.
+- **Stack size** — changes how many of an item fit in one stack, keeping the item's loot
+  roll inside the new cap (the server does not clamp it). Currently: the white 26x75mm
+  flare-gun cartridge stacks to 5.
 - **Loot injection** — adds items that never spawn in vanilla loot into static container
   pools (weapon crates, safes, PMC bodies, etc.) at a tuned rarity. Currently: 6 thermal
   optics and 6 top-tier armour/helmet pieces.
 
-All four features are independently toggleable in `config.json` and fail in isolation — a
+All five features are independently toggleable in `config.json` and fail in isolation — a
 bad entry in one logs a warning and skips, it never stops the server from booting.
 
 ## Client — `TweakboxClient.dll` → `BepInEx/plugins/TweakboxClient/`
