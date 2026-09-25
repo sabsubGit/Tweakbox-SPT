@@ -39,3 +39,15 @@ unlike the server half, it has no effect on its own.
 Server tuning lives in `config.json` next to the DLL (comments and trailing commas are
 fine). Client tuning lives in the BepInEx-generated `.cfg` after first launch. Neither
 needs a rebuild to retune.
+
+## Install
+
+Download the release zip and copy its `BepInEx` and `SPT` folders into your SPT game folder.
+Requires SPT 4.1.x. Every player needs the client plugin (`BepInEx/plugins/TweakboxClient`);
+only the person running the server needs `SPT/user/mods/Tweakbox`.
+
+## Building a release
+
+`./package.sh` builds both projects and writes `dist/Tweakbox-<version>.zip`. The client project
+compiles against game assemblies that are not in this repo - point the `Assembly-CSharp`
+`HintPath` in `Client/TweakboxClient.csproj` at your own `EscapeFromTarkov_Data/Managed` first.
