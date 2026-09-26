@@ -14,6 +14,11 @@ WHAT IT DOES
   Client
     - White (illumination) flares burn for 120 seconds instead of 20.
       Red, green, yellow and acid-green signal flares are unchanged.
+    - White flares are now parachute flares: after ignition they brake and
+      drift down slowly (about 1.5 m/s instead of 7), and their light is a wide
+      spotlight pointing straight down. The game normally switches a flare's
+      light off beyond ~30 m from the camera; that limit is raised for these
+      flares only. On landing the flare goes back to a normal point light.
 
 INSTALL (drag and drop)
   1. Copy the BepInEx and SPT folders from this zip into your SPT game folder
@@ -32,8 +37,15 @@ SETTINGS
   Server: SPT/user/mods/Tweakbox/config.json - every feature has an "enabled"
           switch, and a bad entry is skipped with a warning in the server log
           instead of stopping the server. Back this file up before upgrading.
-  Client: BepInEx/config/com.local.tweakbox.client.cfg (created on first launch)
-          - "White Flare Burn Time (seconds)".
+  Client: BepInEx/config/com.local.tweakbox.client.cfg (created on first launch),
+          or press F12 in game. Sections "Flares", "White Flare - Descent" and
+          "White Flare - Light": burn time, descent speed, spotlight angle, range,
+          brightness, visible distance and shadows. Turn "Slow Descent" and
+          "Downward Spotlight" off for the vanilla behaviour.
+
+UPGRADING
+  Replace BepInEx/plugins/TweakboxClient/TweakboxClient.dll (everyone). Keep your
+  existing config.json; new client options appear in the .cfg by themselves.
 
 UNINSTALL
   Delete BepInEx/plugins/TweakboxClient and SPT/user/mods/Tweakbox.

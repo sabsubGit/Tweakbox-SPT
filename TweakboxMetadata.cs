@@ -10,7 +10,7 @@ public sealed record TweakboxMetadata : IModMetadata
     public string Name { get; init; } = "Tweakbox";
     public string Author { get; init; } = "local";
     public List<string>? Contributors { get; init; } = [];
-    public Version Version { get; init; } = new("1.0.0");
+    public Version Version { get; init; } = new("1.1.0");
     public Range SptVersion { get; init; } = new("~4.1.0");
     public List<string>? Incompatibilities { get; init; } = [];
     public Dictionary<string, Range>? ModDependencies { get; init; } = [];

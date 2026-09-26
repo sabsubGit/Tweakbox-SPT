@@ -30,6 +30,11 @@ bad entry in one logs a warning and skips, it never stops the server from bootin
 - **Flare burn time** — white/illumination flares (SP-81 pistol round and RSP-30 handheld)
   burn for a configurable duration via BepInEx config (default 120s) instead of vanilla's
   20s. Red, green, yellow and acid-green signal flares are untouched.
+- **Parachute flare** — after ignition a white flare brakes and drifts down slowly (1.5 m/s
+  instead of about 7), and its light becomes a wide spotlight pointing straight down. The game
+  normally switches a flare's light off beyond ~30 m from the camera, so a flare overhead lit
+  nothing; that limit is raised for these flares only. Once it lands it turns back into a normal
+  point light. Angle, range, brightness, descent speed and shadows are all tunable in the F12 menu.
 
 Client-side, so it needs installing on every machine in the raid to look consistent —
 unlike the server half, it has no effect on its own.

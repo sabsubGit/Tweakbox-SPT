@@ -5,7 +5,7 @@ using HarmonyLib;
 
 namespace TweakboxClient;
 
-[BepInPlugin("com.local.tweakbox.client", "Tweakbox Client", "1.0.0")]
+[BepInPlugin("com.local.tweakbox.client", "Tweakbox Client", "1.1.0")]
 public class TweakboxClientPlugin : BaseUnityPlugin
 {
     // FlareCartridgeSettings.FlareLifetime is read live every frame in
@@ -28,6 +28,8 @@ public class TweakboxClientPlugin : BaseUnityPlugin
                 new AcceptableValueRange<float>(5f, 600f)
             )
         );
+
+        WhiteFlare.Bind(Config);
 
         new Harmony("com.local.tweakbox.client").PatchAll();
     }
