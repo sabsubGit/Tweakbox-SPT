@@ -6,6 +6,13 @@
     <AssemblyName>Tweakbox</AssemblyName>
     <RootNamespace>Tweakbox</RootNamespace>
     <ReleaseOutputDir>..\Build\SPT_Runtime\user\mods\Tweakbox\</ReleaseOutputDir>
+    <Configurations>Debug;Release;Testing</Configurations>
+  </PropertyGroup>
+  <!-- "Testing" is a Release build plus the debug helpers (TweakboxDebug.cs). It writes to bin/Testing, so it
+       can never be mistaken for, or packaged as, the release build. -->
+  <PropertyGroup Condition="'$(Configuration)'=='Testing'">
+    <Optimize>true</Optimize>
+    <DefineConstants>$(DefineConstants);TWEAKBOX_DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SPTarkov.Common" Version="4.1.2" />
@@ -32,7 +39,7 @@
     </ItemGroup>
     <Delete Files="@(UnwantedFiles)" />
   </Target>
-  <Target Name="CopyBuildOutput" AfterTargets="CleanUnwantedFiles">
+  <Target Name="CopyBuildOutput" AfterTargets="CleanUnwantedFiles" Condition="'$(Configuration)' != 'Testing'">
     <MakeDir Directories="$(ReleaseOutputDir)" />
     <ItemGroup>
       <RemainingFiles Include="$(OutputPath)**\*" />

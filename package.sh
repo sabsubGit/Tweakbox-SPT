@@ -22,6 +22,13 @@ rm -rf dist && mkdir -p "$STAGE/BepInEx/plugins/TweakboxClient" "$STAGE/SPT/user
 # (hollowed.dll and friends) which must never be redistributed.
 cp Client/bin/Release/netstandard2.1/TweakboxClient.dll "$STAGE/BepInEx/plugins/TweakboxClient/"
 cp bin/Release/net10.0/Tweakbox.dll config.json         "$STAGE/SPT/user/mods/Tweakbox/"
+# Safety net: the release must never contain the Testing-build debug helpers (F12 mail buttons / server route).
+for dll in "$STAGE/BepInEx/plugins/TweakboxClient/TweakboxClient.dll" "$STAGE/SPT/user/mods/Tweakbox/Tweakbox.dll"; do
+    if strings -e l "$dll" | grep -qE 'tweakbox/debug|Debug \(testing build only\)'; then
+        echo "refusing to package: $dll contains Testing-build debug code" >&2
+        exit 1
+    fi
+done
 cp LICENSE "$STAGE/"
 sed "s/@VERSION@/$VERSION/" release/README.txt > "$STAGE/README.txt"
 

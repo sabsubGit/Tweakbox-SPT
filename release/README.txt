@@ -12,13 +12,16 @@ WHAT IT DOES
     - Thermal optics and top-tier armour/helmets can rarely be found in weapon
       crates, safes and PMC bodies.
   Client
-    - White (illumination) flares burn for 120 seconds instead of 20.
+    - White (illumination) flares burn for 65 seconds from the SP-81 flare gun
+      and 80 seconds for the single-use handheld flare, instead of 20.
       Red, green, yellow and acid-green signal flares are unchanged.
     - White flares are now parachute flares: after ignition they brake and
       drift down slowly (about 1.5 m/s instead of 7), and their light is a wide
       spotlight pointing straight down. The game normally switches a flare's
       light off beyond ~30 m from the camera; that limit is raised for these
-      flares only. On landing the flare goes back to a normal point light.
+      flares only. A wide point "fill" light sits next to the spotlight so
+      trees and walls to the sides light up as the flare drops. On landing the
+      flare goes back to a normal point light.
 
 INSTALL (drag and drop)
   1. Copy the BepInEx and SPT folders from this zip into your SPT game folder
@@ -40,8 +43,8 @@ SETTINGS
   Client: BepInEx/config/com.local.tweakbox.client.cfg (created on first launch),
           or press F12 in game. Sections "Flares", "White Flare - Descent" and
           "White Flare - Light": burn time, descent speed, spotlight angle, range,
-          brightness, visible distance and shadows. Turn "Slow Descent" and
-          "Downward Spotlight" off for the vanilla behaviour.
+          brightness, visible distance, fill light and shadows. Turn "Slow Descent"
+          and "Downward Spotlight" off for the vanilla behaviour.
 
 UPGRADING
   Replace BepInEx/plugins/TweakboxClient/TweakboxClient.dll (everyone). Keep your

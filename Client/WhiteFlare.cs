@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using BepInEx.Configuration;
 using EFT;
+using EFT.InventoryLogic;
 using EFT.PrefabSettings;
 using HarmonyLib;
 using Systems.Effects;
@@ -30,6 +31,13 @@ internal static class WhiteFlare
     internal static ConfigEntry<float> ShadowDistance;
     internal static ConfigEntry<float> LandedRange;
 
+    internal static ConfigEntry<bool> FillLight;
+    internal static ConfigEntry<float> FillStrength;
+    internal static ConfigEntry<float> FillRange;
+    internal static ConfigEntry<bool> FillShadows;
+
+    internal static ConfigEntry<float> GlowTolerance;
+
     internal static void Bind(ConfigFile config)
     {
         const string fall = "White Flare - Descent";
@@ -57,11 +65,52 @@ internal static class WhiteFlare
             new ConfigDescription("Beyond this distance from the camera the light stops casting shadows.", new AcceptableValueRange<float>(20f, 300f)));
         LandedRange = config.Bind(light, "Landed Light Range (m)", 30f,
             new ConfigDescription("Once the flare hits something it turns back into a normal point light with this range, since a downward spot would light nothing.", new AcceptableValueRange<float>(5f, 100f)));
+
+        const string fill = "White Flare - Fill Light";
+        FillLight = config.Bind(fill, "Fill Light", true,
+            "Adds a wide point light next to the downward spotlight, so trees and walls to the sides light up as the flare drops below them, like a real flare lighting up 360 degrees. Off = spotlight only.");
+        FillStrength = config.Bind(fill, "Fill Strength", 0.35f,
+            new ConfigDescription("Fill light brightness as a fraction of the spotlight's (it follows the same fade in and out and flicker). 0.35 = about a third.", new AcceptableValueRange<float>(0.05f, 2f)));
+        FillRange = config.Bind(fill, "Fill Range (m)", 70f,
+            new ConfigDescription("How far the fill light reaches in every direction.", new AcceptableValueRange<float>(10f, 250f)));
+        FillShadows = config.Bind(fill, "Fill Shadows", false,
+            "Let the fill light cast shadows. Costs noticeably more frame rate (a point light renders six shadow maps), so it is off by default; without it the fill light shines through walls a little.");
+
+        GlowTolerance = config.Bind("White Flare - Glow", "Glow Occlusion Tolerance (m)", 0.2f,
+            new ConfigDescription("The bright star glare fades whenever something (branches, wires, rain) is in front of it. 0.2 is the vanilla value. Raise it in steps (2, 20, 200) if the glare drops out now and then; a very high value makes it show through everything.", new AcceptableValueRange<float>(0.2f, 1000f)));
     }
 
     internal static bool IsWhite(FlareCartridgeSettings settings)
     {
         return settings != null && settings.FlareColorType == FlareColorType.LightFlare;
+    }
+}
+
+// Sets the burn time on the settings object just before FlareCartridge.Init reads it.
+//
+// This deliberately does NOT patch the FlareCartridgeSettings.FlareLifetime getter. That getter is a
+// one-line property (`=> _flareLifetime`), which the Mono JIT inlines into FlareCartridge.Update and
+// Init, so a Harmony patch on it is silently bypassed and the flare dies at the baked 20 s.
+// Writing the field means every read - inlined or not - sees the configured value, and it also
+// feeds the effect's particle duration, fade curve and sound fade, which all take the lifetime.
+[HarmonyPatch(typeof(FlareCartridge), "Init", new[] { typeof(FlareCartridgeSettings), typeof(IPlayer), typeof(Ammo), typeof(Weapon) })]
+internal static class WhiteFlareLifetimePatch
+{
+    private static readonly AccessTools.FieldRef<FlareCartridgeSettings, float> LifetimeRef =
+        AccessTools.FieldRefAccess<FlareCartridgeSettings, float>("_flareLifetime");
+
+    private static void Prefix(FlareCartridgeSettings flareCartridgeSettings, Weapon weapon)
+    {
+        if (!WhiteFlare.IsWhite(flareCartridgeSettings))
+        {
+            return;
+        }
+
+        // The single-use handheld flare (RSP-30 / ROP-30) is a "one-off" weapon; the SP-81 flare gun is not.
+        bool handheld = weapon != null && weapon.IsOneOff;
+        LifetimeRef(flareCartridgeSettings) = handheld
+            ? TweakboxClientPlugin.HandheldBurnSeconds.Value
+            : TweakboxClientPlugin.GunBurnSeconds.Value;
     }
 }
 
@@ -73,16 +122,19 @@ internal static class WhiteFlareLightPatch
 {
     private static void Postfix(FlareShotEffectSelector __instance, FlareColorType flareColorType)
     {
-        if (flareColorType != FlareColorType.LightFlare || !WhiteFlare.DownwardSpot.Value)
+        if (flareColorType != FlareColorType.LightFlare)
         {
             return;
         }
 
         Light light = __instance._flareLight;
-        if (light == null)
+        if (!WhiteFlare.DownwardSpot.Value || light == null)
         {
+            ExtraEffects(__instance, null);
             return;
         }
+
+        ExtraEffects(__instance, light);
 
         light.type = LightType.Spot;
         light.spotAngle = WhiteFlare.SpotAngle.Value;
@@ -119,6 +171,48 @@ internal static class WhiteFlareLightPatch
         {
             light.shadows = LightShadows.None;
             culling._initialShadowsMode = LightShadows.None;
+        }
+    }
+
+    // Runs for every white flare, whatever the spotlight setting.
+    private static void ExtraEffects(FlareShotEffectSelector selector, Light light)
+    {
+        if (WhiteFlare.FillLight.Value && WhiteFlare.DownwardSpot.Value && light != null)
+        {
+            GameObject go = new GameObject("TweakboxFillLight");
+            go.transform.SetParent(light.transform.parent, false);
+            go.transform.localPosition = light.transform.localPosition;
+
+            Light fill = go.AddComponent<Light>();
+            fill.type = LightType.Point;
+            fill.range = WhiteFlare.FillRange.Value;
+            fill.color = light.color;
+            fill.intensity = 0f;
+            fill.shadows = WhiteFlare.FillShadows.Value ? LightShadows.Soft : LightShadows.None;
+
+            FlareFillLightFollower follower = go.AddComponent<FlareFillLightFollower>();
+            follower.Source = light;
+            follower.Strength = WhiteFlare.FillStrength.Value;
+        }
+
+        // The glare material has a depth check: anything nearer than the flare (minus this offset) hides it.
+        float tolerance = WhiteFlare.GlowTolerance.Value;
+        if (tolerance > 0.201f && selector._flareParticleSystem != null)
+        {
+            ParticleSystemRenderer glare = selector._flareParticleSystem.GetComponent<ParticleSystemRenderer>();
+            if (glare != null)
+            {
+                Material material = glare.material; // per-flare copy, so other flares keep the vanilla values
+                if (material.HasProperty("_DepthOffset"))
+                {
+                    material.SetFloat("_DepthOffset", tolerance);
+                }
+
+                if (material.HasProperty("_FadeDepthOffset"))
+                {
+                    material.SetFloat("_FadeDepthOffset", tolerance * 1.5f); // vanilla ratio 0.3 : 0.2
+                }
+            }
         }
     }
 }
@@ -203,5 +297,41 @@ internal static class WhiteFlareFlightPatch
         light.type = LightType.Point;
         light.range = WhiteFlare.LandedRange.Value;
         light.transform.localRotation = Quaternion.identity;
+
+        // The main light is an ordinary point light again, so the extra fill light would just double it.
+        FlareFillLightFollower fill = effect.GetComponentInChildren<FlareFillLightFollower>();
+        if (fill != null)
+        {
+            Object.Destroy(fill.gameObject);
+        }
+    }
+}
+
+// Keeps the fill light's brightness locked to the spotlight's. The game drives the spotlight's intensity
+// (fade in/out, flicker, distance fade), so copying it each frame gives the fill the same envelope for free.
+public sealed class FlareFillLightFollower : MonoBehaviour
+{
+    public Light Source;
+    public float Strength;
+    private Light _self;
+
+    private void Awake()
+    {
+        _self = GetComponent<Light>();
+    }
+
+    private void LateUpdate()
+    {
+        if (_self == null)
+        {
+            return;
+        }
+
+        bool live = Source != null && Source.enabled;
+        _self.enabled = live;
+        if (live)
+        {
+            _self.intensity = Source.intensity * Strength;
+        }
     }
 }

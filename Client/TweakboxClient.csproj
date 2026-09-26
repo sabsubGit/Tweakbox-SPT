@@ -6,6 +6,13 @@
     <RootNamespace>TweakboxClient</RootNamespace>
     <AssemblyName>TweakboxClient</AssemblyName>
     <ReleaseOutputDir>..\..\Build\BepInEx\plugins\TweakboxClient\</ReleaseOutputDir>
+    <Configurations>Debug;Release;Testing</Configurations>
+  </PropertyGroup>
+  <!-- "Testing" is a Release build plus the F12 debug buttons (DebugTools.cs), written to bin/Testing so it can
+       never be mistaken for, or packaged as, the release build. -->
+  <PropertyGroup Condition="'$(Configuration)'=='Testing'">
+    <Optimize>true</Optimize>
+    <DefineConstants>$(DefineConstants);TWEAKBOX_DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,9 +24,13 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\hollowed.dll</HintPath>
     </Reference>
+    <Reference Include="spt-common">
+      <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\spt-common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
-  <Target Name="CopyBuildOutput" AfterTargets="Build">
+  <Target Name="CopyBuildOutput" AfterTargets="Build" Condition="'$(Configuration)' != 'Testing'">
     <MakeDir Directories="$(ReleaseOutputDir)" />
     <ItemGroup>
       <OutFiles Include="$(OutputPath)TweakboxClient.dll" />
