@@ -36,6 +36,9 @@ internal static class WhiteFlare
     internal static ConfigEntry<float> FillRange;
     internal static ConfigEntry<bool> FillShadows;
 
+    internal static ConfigEntry<float> FlickerStrength;
+    internal static ConfigEntry<float> FlickerSpeed;
+
     internal static ConfigEntry<float> GlowTolerance;
 
     internal static void Bind(ConfigFile config)
@@ -43,7 +46,7 @@ internal static class WhiteFlare
         const string fall = "White Flare - Descent";
         SlowDescent = config.Bind(fall, "Slow Descent", true,
             "After ignition the flare brakes and drifts down like a parachute flare. Off = vanilla fall (about 7 m/s).");
-        DescentSpeed = config.Bind(fall, "Descent Speed (m/s)", 1.5f,
+        DescentSpeed = config.Bind(fall, "Descent Speed (m/s)", 1.0f,
             new ConfigDescription("How fast it sinks once it has slowed down. Lower = hangs in the air longer.", new AcceptableValueRange<float>(0.3f, 8f)));
         SlowDownTime = config.Bind(fall, "Slow-Down Time (s)", 1.5f,
             new ConfigDescription("How long the braking takes after ignition. Higher = it carries on further before it starts to drift.", new AcceptableValueRange<float>(0.1f, 6f)));
@@ -75,6 +78,12 @@ internal static class WhiteFlare
             new ConfigDescription("How far the fill light reaches in every direction.", new AcceptableValueRange<float>(10f, 250f)));
         FillShadows = config.Bind(fill, "Fill Shadows", false,
             "Let the fill light cast shadows. Costs noticeably more frame rate (a point light renders six shadow maps), so it is off by default; without it the fill light shines through walls a little.");
+
+        const string flicker = "White Flare - Flicker";
+        FlickerStrength = config.Bind(flicker, "Flicker Strength", 0.15f,
+            new ConfigDescription("How much the flare's light wavers, like a burning flare. Roughly the size of the brightness swings as a fraction of normal (0.15 = about 15% either way). 0 = steady light. Applies to the spotlight, the fill light and, once landed, the ground light. Takes effect live.", new AcceptableValueRange<float>(0f, 0.6f)));
+        FlickerSpeed = config.Bind(flicker, "Flicker Speed", 1f,
+            new ConfigDescription("How fast the flicker is. Higher = more nervous. Takes effect live.", new AcceptableValueRange<float>(0.2f, 4f)));
 
         GlowTolerance = config.Bind("White Flare - Glow", "Glow Occlusion Tolerance (m)", 0.2f,
             new ConfigDescription("The bright star glare fades whenever something (branches, wires, rain) is in front of it. 0.2 is the vanilla value. Raise it in steps (2, 20, 200) if the glare drops out now and then; a very high value makes it show through everything.", new AcceptableValueRange<float>(0.2f, 1000f)));
@@ -120,7 +129,7 @@ internal static class WhiteFlareLifetimePatch
 [HarmonyPatch(typeof(FlareShotEffectSelector), nameof(FlareShotEffectSelector.SetFlareEffect))]
 internal static class WhiteFlareLightPatch
 {
-    private static void Postfix(FlareShotEffectSelector __instance, FlareColorType flareColorType)
+    private static void Postfix(FlareShotEffectSelector __instance, FlareColorType flareColorType, float lifetime)
     {
         if (flareColorType != FlareColorType.LightFlare)
         {
@@ -128,13 +137,14 @@ internal static class WhiteFlareLightPatch
         }
 
         Light light = __instance._flareLight;
+        Light fill = ExtraEffects(__instance, light);
+        AddFlicker(light, fill);
+        RestretchEmission(__instance._flareParticleSystem, lifetime);
+
         if (!WhiteFlare.DownwardSpot.Value || light == null)
         {
-            ExtraEffects(__instance, null);
             return;
         }
-
-        ExtraEffects(__instance, light);
 
         light.type = LightType.Spot;
         light.spotAngle = WhiteFlare.SpotAngle.Value;
@@ -174,25 +184,56 @@ internal static class WhiteFlareLightPatch
         }
     }
 
-    // Runs for every white flare, whatever the spotlight setting.
-    private static void ExtraEffects(FlareShotEffectSelector selector, Light light)
+    // SetFlareEffect (vanilla) already stretches the particle system's own Main.duration and
+    // startLifetime to the new lifetime, so the glow itself lives exactly as long as it should. What
+    // it never touches is the Emission module's bursts: a handful of repeating flashes baked in the
+    // prefab, timed for the vanilla 20 s flare. At our much longer burn time they keep firing on their
+    // original ~20 s cadence, which looks like the whole glow switching off and back on every 20 s.
+    // Rescaling each burst's time and repeat interval by how much we stretched the lifetime spreads
+    // the same flashes across the new duration instead - whatever the original count and spacing were,
+    // this works without needing to know their baked values.
+    private static void RestretchEmission(ParticleSystem flareParticles, float lifetime)
     {
+        if (flareParticles == null || lifetime <= 0.001f)
+        {
+            return;
+        }
+
+        ParticleSystem.EmissionModule emission = flareParticles.emission;
+        int count = emission.burstCount;
+        if (count == 0)
+        {
+            return;
+        }
+
+        float scale = lifetime / 20f; // vanilla's baked assumption
+        ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[count];
+        emission.GetBursts(bursts);
+        for (int i = 0; i < count; i++)
+        {
+            bursts[i].time *= scale;
+            bursts[i].repeatInterval *= scale;
+        }
+
+        emission.SetBursts(bursts);
+    }
+
+    // Runs for every white flare, whatever the spotlight setting. Returns the fill light, if one was made.
+    private static Light ExtraEffects(FlareShotEffectSelector selector, Light light)
+    {
+        Light fill = null;
         if (WhiteFlare.FillLight.Value && WhiteFlare.DownwardSpot.Value && light != null)
         {
             GameObject go = new GameObject("TweakboxFillLight");
             go.transform.SetParent(light.transform.parent, false);
             go.transform.localPosition = light.transform.localPosition;
 
-            Light fill = go.AddComponent<Light>();
+            fill = go.AddComponent<Light>();
             fill.type = LightType.Point;
             fill.range = WhiteFlare.FillRange.Value;
             fill.color = light.color;
             fill.intensity = 0f;
             fill.shadows = WhiteFlare.FillShadows.Value ? LightShadows.Soft : LightShadows.None;
-
-            FlareFillLightFollower follower = go.AddComponent<FlareFillLightFollower>();
-            follower.Source = light;
-            follower.Strength = WhiteFlare.FillStrength.Value;
         }
 
         // The glare material has a depth check: anything nearer than the flare (minus this offset) hides it.
@@ -214,6 +255,23 @@ internal static class WhiteFlareLightPatch
                 }
             }
         }
+
+        return fill;
+    }
+
+    // One component drives the flare's light (flicker) and the fill light (follows it), so the two can
+    // never disagree about order within a frame.
+    private static void AddFlicker(Light light, Light fill)
+    {
+        if (light == null)
+        {
+            return;
+        }
+
+        FlareLightFlicker flicker = light.gameObject.AddComponent<FlareLightFlicker>();
+        flicker.Main = light;
+        flicker.Fill = fill;
+        flicker.FillStrength = WhiteFlare.FillStrength.Value;
     }
 }
 
@@ -299,39 +357,98 @@ internal static class WhiteFlareFlightPatch
         light.transform.localRotation = Quaternion.identity;
 
         // The main light is an ordinary point light again, so the extra fill light would just double it.
-        FlareFillLightFollower fill = effect.GetComponentInChildren<FlareFillLightFollower>();
-        if (fill != null)
+        FlareLightFlicker flicker = light.GetComponent<FlareLightFlicker>();
+        if (flicker != null && flicker.Fill != null)
         {
-            Object.Destroy(fill.gameObject);
+            Object.Destroy(flicker.Fill.gameObject);
         }
     }
 }
 
-// Keeps the fill light's brightness locked to the spotlight's. The game drives the spotlight's intensity
-// (fade in/out, flicker, distance fade), so copying it each frame gives the fill the same envelope for free.
-public sealed class FlareFillLightFollower : MonoBehaviour
+// Makes the flare's light waver like a burning flare, and keeps the fill light locked to it.
+//
+// The game sets the flare light's intensity only when its fade envelope or distance fade changes, and only
+// once every ~20 frames (CullingLightObject.CustomUpdate, called from CullingManager.Update). Between those
+// writes the light just holds its value. So each frame this reads the intensity back: if it still equals what
+// this component wrote last frame the game has not touched it, and the baseline stays as it was; if it differs
+// the game wrote a fresh baseline and that is picked up. Either way the flicker is applied to a baseline, never
+// stacked on top of itself. It runs in LateUpdate, i.e. after the game's Update-time write.
+public sealed class FlareLightFlicker : MonoBehaviour
 {
-    public Light Source;
-    public float Strength;
-    private Light _self;
+    public Light Main;
+    public Light Fill;
+    public float FillStrength;
+
+    private float _seed;
+    private float _baseline;
+    private float _lastWritten = float.NaN;
 
     private void Awake()
     {
-        _self = GetComponent<Light>();
+        // Each flare wavers differently, so several in the air do not pulse in step.
+        _seed = Random.value * 200f + 5f;
+    }
+
+    private void OnEnable()
+    {
+        _lastWritten = float.NaN;
     }
 
     private void LateUpdate()
     {
-        if (_self == null)
+        if (Main == null)
         {
             return;
         }
 
-        bool live = Source != null && Source.enabled;
-        _self.enabled = live;
-        if (live)
+        bool live = Main.enabled;
+        if (Fill != null)
         {
-            _self.intensity = Source.intensity * Strength;
+            Fill.enabled = live;
         }
+
+        if (!live)
+        {
+            _lastWritten = float.NaN;
+            return;
+        }
+
+        float current = Main.intensity;
+        if (!Mathf.Approximately(current, _lastWritten))
+        {
+            _baseline = current;
+        }
+
+        float factor = Factor();
+        Main.intensity = _baseline * factor;
+        _lastWritten = Main.intensity;
+
+        if (Fill != null)
+        {
+            Fill.intensity = _baseline * FillStrength * factor;
+        }
+    }
+
+    // Three layers of smooth noise: a quick flutter, a slower wobble and a lazy drift, so it never looks like a loop.
+    private float Factor()
+    {
+        float strength = WhiteFlare.FlickerStrength.Value;
+        if (strength <= 0f)
+        {
+            return 1f;
+        }
+
+        float t = Time.time * WhiteFlare.FlickerSpeed.Value;
+        float offset = 0.5f * Noise(t * 8f, _seed)
+                     + 0.35f * Noise(t * 2.3f, _seed + 31f)
+                     + 0.15f * Noise(t * 0.6f, _seed + 67f);
+
+        // Perlin noise rarely reaches its extremes, so the x2 makes the strength setting roughly the peak swing.
+        return Mathf.Clamp(1f + strength * 2f * offset, 0.2f, 2f);
+    }
+
+    private static float Noise(float x, float y)
+    {
+        return Mathf.PerlinNoise(x, y) * 2f - 1f;
     }
 }

@@ -16,12 +16,15 @@ WHAT IT DOES
       and 80 seconds for the single-use handheld flare, instead of 20.
       Red, green, yellow and acid-green signal flares are unchanged.
     - White flares are now parachute flares: after ignition they brake and
-      drift down slowly (about 1.5 m/s instead of 7), and their light is a wide
+      drift down slowly (about 1 m/s instead of 7), and their light is a wide
       spotlight pointing straight down. The game normally switches a flare's
       light off beyond ~30 m from the camera; that limit is raised for these
       flares only. A wide point "fill" light sits next to the spotlight so
       trees and walls to the sides light up as the flare drops. On landing the
-      flare goes back to a normal point light.
+      flare goes back to a normal point light. The light wavers slightly like
+      a burning flare (strength and speed are adjustable, 0 = steady). The
+      bright glow no longer cuts off and relights every 20 seconds - it now
+      stays lit for however long the flare actually burns.
 
 INSTALL (drag and drop)
   1. Copy the BepInEx and SPT folders from this zip into your SPT game folder

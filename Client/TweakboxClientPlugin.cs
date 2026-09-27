@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace TweakboxClient;
 
-[BepInPlugin("com.local.tweakbox.client", "Tweakbox Client", "1.2.0")]
+[BepInPlugin("com.local.tweakbox.client", "Tweakbox Client", "1.2.1")]
 public class TweakboxClientPlugin : BaseUnityPlugin
 {
     // How long white flares burn. Applied in WhiteFlareLifetimePatch (see WhiteFlare.cs).
