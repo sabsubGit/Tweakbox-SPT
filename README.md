@@ -1,6 +1,6 @@
 # Tweakbox
 
-A small collection of fun, low-grind tweaks for SPT (single-player Tarkov) and Fika co-op.
+A small collection of fun, low-grind tweaks for SPT (Single Player Tushonka) and Fika co-op.
 
 > **Requirements**
 > - SPT 4.1.x
