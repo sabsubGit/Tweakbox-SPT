@@ -17,7 +17,7 @@ WHAT IT DOES
       medical bloodset at loyalty level 3. Players joining a host get its model
       and textures from the host's server automatically.
     - Peacekeeper sells the Peltor TEP-300 tactical earplug (Coyote Brown) for
-      $315 at loyalty level 3 (Ref only sells it for GP coins).
+      $315 at loyalty level 3 (otherwise no trader sells it for money).
   Client
     - White (illumination) flares burn for 65 seconds from the SP-81 flare gun
       and 80 seconds for the single-use handheld flare, instead of 20.
