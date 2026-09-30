@@ -18,6 +18,22 @@ public sealed class TweakboxConfig
 
     [JsonPropertyName("traderStock")]
     public TraderStockConfig TraderStock { get; set; } = new();
+
+    [JsonPropertyName("spawnLike")]
+    public SpawnLikeConfig SpawnLike { get; set; } = new();
+
+    // New items cloned from existing ones (runs before every other feature, so trader stock and loot
+    // injection entries can use the new ids). Each entry is SPT's own NewItemFromCloneDetails JSON.
+    public CustomItemsConfig CustomItems { get; set; } = new();
+}
+
+public sealed class CustomItemsConfig
+{
+    public bool Enabled { get; set; } = true;
+
+    // Kept as raw JSON and parsed with SPT's JsonUtil, which knows SPT's own converters (MongoId,
+    // health-effect dictionaries, ...); plain System.Text.Json does not.
+    public List<System.Text.Json.JsonElement> Items { get; set; } = [];
 }
 
 public sealed class FleaUnbanConfig
@@ -131,6 +147,13 @@ public sealed class TraderStockEntry
     [JsonPropertyName("priceRub")]
     public double PriceRub { get; set; }
 
+    /// "RUB" (default), "USD" or "EUR". With USD/EUR set "price" instead of priceRub.
+    [JsonPropertyName("currency")]
+    public string Currency { get; set; } = "RUB";
+
+    [JsonPropertyName("price")]
+    public double? Price { get; set; }
+
     /// Loyalty level the offer unlocks at. Jaeger's LL1 needs nothing at all.
     [JsonPropertyName("loyaltyLevel")]
     public int LoyaltyLevel { get; set; } = 1;
@@ -138,6 +161,61 @@ public sealed class TraderStockEntry
     /// Purchases allowed per restock. Null means unlimited.
     [JsonPropertyName("buyRestrictionMax")]
     public int? BuyRestrictionMax { get; set; }
+
+    /// Items asked in exchange instead of roubles. When set, priceRub is ignored.
+    [JsonPropertyName("barter")]
+    public List<BarterCost>? Barter { get; set; }
+}
+
+public sealed class BarterCost
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = string.Empty;
+
+    [JsonPropertyName("count")]
+    public double Count { get; set; } = 1;
+}
+
+/// Makes an item spawn wherever some existing items already can: loose loot spawn
+/// points, static containers and bot inventory pools that hold any of likeItems get
+/// the item too, weighted like the rarest of those look-alikes present there.
+public sealed class SpawnLikeConfig
+{
+    [JsonPropertyName("enabled")]
+    public bool Enabled { get; set; } = true;
+
+    [JsonPropertyName("entries")]
+    public List<SpawnLikeEntry> Entries { get; set; } = [];
+}
+
+public sealed class SpawnLikeEntry
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = string.Empty;
+
+    [JsonPropertyName("comment")]
+    public string? Comment { get; set; }
+
+    [JsonPropertyName("likeItems")]
+    public List<string> LikeItems { get; set; } = [];
+
+    /// Multiplies the look-alike weight; 1 = exactly as common as the rarest look-alike present.
+    [JsonPropertyName("weightFactor")]
+    public double WeightFactor { get; set; } = 1;
+
+    [JsonPropertyName("looseLoot")]
+    public bool LooseLoot { get; set; } = true;
+
+    [JsonPropertyName("containers")]
+    public bool Containers { get; set; } = true;
+
+    [JsonPropertyName("bots")]
+    public bool Bots { get; set; } = true;
+
+    /// usec/bear pools are not loot pools: SPT reads them as PMC price overrides.
+    /// PMC loot is built from every item of an allowed type, so PMCs need no entry.
+    [JsonPropertyName("excludeBots")]
+    public List<string> ExcludeBots { get; set; } = ["usec", "bear"];
 }
 
 /// Changes how many of an item fit in one inventory stack. The change is made to

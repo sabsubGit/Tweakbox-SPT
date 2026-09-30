@@ -1,4 +1,40 @@
 {
+  // New items, cloned from an existing item and re-skinned. Each entry is SPT's standard
+  // "new item from clone" format. They are created before everything else below, so the trader
+  // stock and loot injection sections can sell or spawn them by their "newId".
+  // The models/textures ship in this mod's bundles/ folder (see bundles.json); the server hands
+  // them to every connecting client, so friends don't install anything extra for them.
+  "customItems": {
+    "enabled": true,
+    "items": [
+      {
+        // IDEA ISKUB lingonberry soda - the water bottle with a new model and label.
+        // Same 1x2 size, same drinking animation and sound as the water bottle.
+        "newId": "6a1a5cb0d11dea1a1150da01",
+        "newItemName": "item_drink_iskub",
+        "itemTplToClone": "5448fee04bdc2dbc018b4567",
+        "parentId": "5448e8d64bdc2dce718b4568",
+        "handbookParentId": "5b47574386f77428ca22b335",
+        "handbookPriceRoubles": 14000,
+        "fleaPriceRoubles": 30000,
+        "overrideProperties": {
+          "Prefab": { "path": "assets/content/weapons/usable_items/item_iskub/item_iskub_loot.bundle", "rcid": "" },
+          "UsePrefab": { "path": "assets/content/weapons/usable_items/item_iskub/item_iskub_container.bundle", "rcid": "" },
+          "Weight": 0.55,
+          "effects_health": {
+            "Hydration": { "value": 80 }
+          }
+        },
+        "locales": {
+          "en": {
+            "name": "IDEA ISKUB lingonberry soda",
+            "shortName": "Iskub",
+            "description": "A sparkling lingonberry soda from IDEA. Sweet, fizzy and tart, and by most accounts the best sugary drink still on the shelves in Tarkov, which isn't the compliment it used to be, but it still counts."
+          }
+        }
+      }
+    ]
+  },
   "fleaUnban": {
     "enabled": true,
     "items": [
@@ -40,6 +76,25 @@
         "comment": "26x75mm flare cartridge (Green) - SP-81 round, activates flare extracts",
         "priceRub": 6524,
         "loyaltyLevel": 2
+      },
+      {
+        // Ref sells it (WTT-ContentBackport) for GP coins; this is the dollar option.
+        // Priced at its handbook value (38,050 RUB / 121 per dollar), same 3-per-restock limit as Ref.
+        "trader": "Peacekeeper",
+        "id": "68bf405779c8186398099017",
+        "comment": "Peltor TEP-300 tactical earplug (Coyote Brown)",
+        "currency": "USD",
+        "price": 315,
+        "loyaltyLevel": 3,
+        "buyRestrictionMax": 3
+      },
+      {
+        // IDEA ISKUB lingonberry soda (custom item, see customItems) - barter only.
+        "trader": "Therapist",
+        "id": "6a1a5cb0d11dea1a1150da01",
+        "comment": "IDEA ISKUB lingonberry soda (barter)",
+        "loyaltyLevel": 3,
+        "barter": [ { "id": "5b4335ba86f7744d2837a264", "count": 1 } ] // Medical bloodset
       }
     ]
   },
@@ -159,6 +214,25 @@
         "comment": "Vulkan-5 LShZ-5 helmet (Eight-ball)",
         "sharePercent": 0.15,
         "containers": ["Safe", "PMC_dead"]
+      }
+    ]
+  },
+
+  // Makes an item spawn wherever some existing items already can: loose loot spots,
+  // static containers and scav/boss/follower inventories that can hold any of "likeItems"
+  // get it too, weighted like the rarest look-alike present there (times weightFactor).
+  // PMCs need no entry: SPT builds their bag loot from every drink, weighted by flea price.
+  "spawnLike": {
+    "enabled": true,
+    "entries": [
+      {
+        "id": "6a1a5cb0d11dea1a1150da01",
+        "comment": "IDEA ISKUB lingonberry soda",
+        "likeItems": [
+          "5448fee04bdc2dbc018b4567", // Bottle of water (0.6L)
+          "5e8f3423fd7471236e6e3b64"  // Norvinsky Yadreniy premium kvass
+        ],
+        "weightFactor": 1.0
       }
     ]
   }

@@ -11,6 +11,13 @@ WHAT IT DOES
     - The white flare-gun cartridge stacks to 5 and is found in packs of 1-5.
     - Thermal optics and top-tier armour/helmets can rarely be found in weapon
       crates, safes and PMC bodies.
+    - New drink: IDEA ISKUB lingonberry soda (+80 hydration, no energy). It is
+      found wherever water bottles and kvass are (loose loot, containers, scav
+      and PMC inventories), sold on the flea, and Therapist trades one for a
+      medical bloodset at loyalty level 3. Players joining a host get its model
+      and textures from the host's server automatically.
+    - Peacekeeper sells the Peltor TEP-300 tactical earplug (Coyote Brown) for
+      $315 at loyalty level 3 (Ref only sells it for GP coins).
   Client
     - White (illumination) flares burn for 65 seconds from the SP-81 flare gun
       and 80 seconds for the single-use handheld flare, instead of 20.
@@ -25,6 +32,9 @@ WHAT IT DOES
       a burning flare (strength and speed are adjustable, 0 = steady). The
       bright glow no longer cuts off and relights every 20 seconds - it now
       stays lit for however long the flare actually burns.
+    - A magazine's "Load ammo" menu shows each round's penetration in brackets,
+      coloured by the armour class it beats: red under 20, orange 20+, yellow
+      30+, green 40+, blue 50+, purple 60+.
 
 INSTALL (drag and drop)
   1. Copy the BepInEx and SPT folders from this zip into your SPT game folder
@@ -47,11 +57,17 @@ SETTINGS
           or press F12 in game. Sections "Flares", "White Flare - Descent" and
           "White Flare - Light": burn time, descent speed, spotlight angle, range,
           brightness, visible distance, fill light and shadows. Turn "Slow Descent"
-          and "Downward Spotlight" off for the vanilla behaviour.
+          and "Downward Spotlight" off for the vanilla behaviour. "Ammo Labels"
+          turns the penetration labels off.
 
 UPGRADING
-  Replace BepInEx/plugins/TweakboxClient/TweakboxClient.dll (everyone). Keep your
-  existing config.json; new client options appear in the .cfg by themselves.
+  Replace BepInEx/plugins/TweakboxClient/TweakboxClient.dll (everyone).
+  Host: replace Tweakbox.dll and copy the new bundles folder and bundles.json
+  into SPT/user/mods/Tweakbox. If you kept your own config.json, add the new
+  "customItems" and "spawnLike" sections from this zip's config.json, or the
+  Iskub will not exist. Remove any Iskub from inventories before uninstalling.
 
 UNINSTALL
-  Delete BepInEx/plugins/TweakboxClient and SPT/user/mods/Tweakbox.
+  First sell or discard every IDEA ISKUB soda: a profile still holding one is
+  marked invalid by the server once the mod is gone. Then delete
+  BepInEx/plugins/TweakboxClient and SPT/user/mods/Tweakbox.

@@ -1,0 +1,44 @@
+{
+  "manifest": [
+    {
+      "key": "assets/content/weapons/usable_items/item_iskub/textures/client_assets.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/weapons/usable_items/item_iskub/client_assets.bundle",
+      "dependencyKeys": [
+        "assets/content/weapons/usable_items/item_iskub/textures/client_assets.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/weapons/usable_items/item_iskub/item_iskub_loot.bundle",
+      "dependencyKeys": [
+        "assets/content/weapons/usable_items/item_iskub/client_assets.bundle",
+        "assets/content/weapons/usable_items/item_iskub/textures/client_assets.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/weapons/usable_items/item_iskub/item_iskub_container.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/audio/weapons/usable_items/item_tetrapakwcap.bundle",
+        "assets/content/prefabs/muzzleflash_base.bundle",
+        "assets/content/weapons/additional_hands/client_assets.bundle",
+        "assets/content/weapons/animations/simple_animations.bundle",
+        "assets/content/weapons/animations/spirit_animations.bundle",
+        "assets/content/weapons/usable_items/item_iskub/client_assets.bundle",
+        "assets/content/weapons/usable_items/item_iskub/textures/client_assets.bundle",
+        "assets/content/weapons/weapon_root_anim_fix.bundle",
+        "assets/systems/effects/heathaze/defaultheathaze.bundle",
+        "assets/systems/effects/muzzleflash/muzzleflash.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    }
+  ]
+}

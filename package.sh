@@ -22,6 +22,9 @@ rm -rf dist && mkdir -p "$STAGE/BepInEx/plugins/TweakboxClient" "$STAGE/SPT/user
 # (hollowed.dll and friends) which must never be redistributed.
 cp Client/bin/Release/netstandard2.1/TweakboxClient.dll "$STAGE/BepInEx/plugins/TweakboxClient/"
 cp bin/Release/net10.0/Tweakbox.dll config.json         "$STAGE/SPT/user/mods/Tweakbox/"
+# Custom item models/textures (the IDEA Iskub). The server hands these to every connecting client.
+[ -f bundles.json ] && [ -d bundles ] || { echo "bundles/ or bundles.json missing - run tools/rebuild_iskub.sh" >&2; exit 1; }
+cp -r bundles bundles.json                              "$STAGE/SPT/user/mods/Tweakbox/"
 # Safety net: the release must never contain the Testing-build debug helpers (F12 mail buttons / server route).
 for dll in "$STAGE/BepInEx/plugins/TweakboxClient/TweakboxClient.dll" "$STAGE/SPT/user/mods/Tweakbox/Tweakbox.dll"; do
     if strings -e l "$dll" | grep -qE 'tweakbox/debug|Debug \(testing build only\)'; then

@@ -24,6 +24,10 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\hollowed.dll</HintPath>
     </Reference>
+    <Reference Include="Comfort">
+      <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\Comfort.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="spt-common">
       <HintPath>..\..\SAIN\SAIN-4.1.2-port\References\spt-common.dll</HintPath>
       <Private>false</Private>
