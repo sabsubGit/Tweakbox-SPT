@@ -1,7 +1,11 @@
 # Tweakbox
 
 A small collection of fun, low-grind tweaks for SPT (single-player Tarkov) and Fika co-op.
-Works with SPT 4.1.
+
+> **Requirements**
+> - SPT 4.1.x
+> - Fika is optional – it works in single player and in co-op
+> - No other mods needed
 
 ## What it adds and changes
 
@@ -23,8 +27,8 @@ Works with SPT 4.1.
 ### Traders and flea market
 - **Jaeger** sells white flare cartridges and white handheld flares for cash, and the green
   flare cartridge (used for flare extracts) at loyalty level 2.
-- **Peacekeeper** sells the Peltor TEP-300 earplugs for dollars at loyalty level 3 (normally
-  Ref only sells them for GP coins).
+- **Peacekeeper** sells the Peltor TEP-300 earplugs for dollars at loyalty level 3 (otherwise
+  no trader sells them for money).
 - **KS-23M shotgun** can be bought on the flea market.
 - Cheaper white flares on the flea, and white flare cartridges stack up to 5.
 
