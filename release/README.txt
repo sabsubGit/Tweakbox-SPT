@@ -4,6 +4,18 @@ Source and issues: https://github.com/sabsubGit/Tweakbox-SPT   (MIT licence)
 
 WHAT IT DOES
   Server
+    - New rifles: the Valmet RK 62 (black, "cheese grater" handguard, tube
+      stock) and the modernised RK 62 M (olive green, optic rail on the dust
+      cover, M-LOK handguard, flash hider that takes a suppressor). Both fire
+      7.62x39 and take normal AK magazines, grips, stocks and muzzle devices.
+      They come with their own parts: three grips, three handguards, two dust
+      covers, a tube stock, the "waffle" magazine, two flash hiders and an
+      RK 62 M suppressor. The grips, magazine and flash hiders fit other 7.62
+      AKs too. Skier sells the rifles and every part (loyalty levels 2-4; the
+      RK 62 M comes with a red dot, a front grip and a Magpul stock). With
+      Acid's Progressive Bot System (APBS) and its modded-weapon import switched
+      on, PMCs carry them too. Players joining a host get the models and
+      textures from the host's server automatically.
     - KS-23M shotgun can be bought on the flea market at any level.
     - Jaeger sells the white 26x75mm flare-gun cartridge and the white RSP-30
       handheld flare for cash (loyalty level 1), and the green 26x75mm cartridge
@@ -62,12 +74,13 @@ SETTINGS
 
 UPGRADING
   Replace BepInEx/plugins/TweakboxClient/TweakboxClient.dll (everyone).
-  Host: replace Tweakbox.dll and copy the new bundles folder and bundles.json
-  into SPT/user/mods/Tweakbox. If you kept your own config.json, add the new
-  "customItems" and "spawnLike" sections from this zip's config.json, or the
-  Iskub will not exist. Remove any Iskub from inventories before uninstalling.
+  Host: replace Tweakbox.dll, config.json, the bundles folder and bundles.json
+  in SPT/user/mods/Tweakbox. The new rifles, their parts and Skier's offers
+  are all in config.json - if you changed your old copy, redo those changes in
+  the new one rather than keeping the old file, or the rifles will not exist.
 
 UNINSTALL
-  First sell or discard every IDEA ISKUB soda: a profile still holding one is
-  marked invalid by the server once the mod is gone. Then delete
+  First sell or discard every IDEA ISKUB soda and every RK 62 / RK 62 M rifle,
+  part and magazine: a profile still holding one is marked invalid by the
+  server once the mod is gone. Then delete
   BepInEx/plugins/TweakboxClient and SPT/user/mods/Tweakbox.

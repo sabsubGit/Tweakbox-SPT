@@ -9,6 +9,22 @@ A small collection of fun, low-grind tweaks for SPT (Single Player Tushonka) and
 
 ## What it adds and changes
 
+### New guns
+- **Valmet RK 62 and RK 62 M** – Finland's service rifle in two versions. The classic **RK 62**
+  is black, with the "cheese grater" handguard and a tube stock. The modernised **RK 62 M** is
+  olive green, with a rail for optics on the dust cover, an M-LOK handguard and a flash hider
+  that takes a suppressor. Both fire 7.62x39 and take normal AK magazines, grips, stocks and
+  muzzle devices.
+- **Their own parts** – three grips (including the ribbed "bicycle" grip), three handguards,
+  two dust covers, the tube stock, the "waffle" magazine, two flash hiders and an RK 62 M
+  suppressor. The parts swap between the two rifles, and the grips, the magazine and the flash
+  hiders fit other 7.62 AKs too.
+- **Skier** sells the rifles and every part: the RK 62 and its classic parts at loyalty level 2,
+  the RK 62 M (ready to go with a red dot, a front grip and a Magpul stock) and its parts at
+  level 3, and the suppressor at level 4.
+- If you also run Acid's Progressive Bot System (APBS) with its modded-weapon import switched
+  on, PMCs carry them too.
+
 ### New stuff
 - **IDEA ISKUB lingonberry soda** – a brand new drink (+80 hydration). Find it wherever you'd
   find water bottles and kvass: loose on shelves, in containers, and on scavs and PMCs. It's also
@@ -42,12 +58,14 @@ A small collection of fun, low-grind tweaks for SPT (Single Player Tushonka) and
 2. Copy the `BepInEx` and `SPT` folders from the zip into your SPT game folder and allow it to
    merge/replace.
 3. **Everyone** in your group needs the `BepInEx` part. **Only the person hosting the server**
-   needs the `SPT` part – the soda's model and textures are sent to everyone else automatically.
+   needs the `SPT` part – the new guns' and the soda's models and textures are sent to everyone
+   else automatically.
 
 Most things can be tweaked: flare settings in-game with **F12**, everything else in
 `SPT/user/mods/Tweakbox/config.json`.
 
-Uninstalling: sell or throw away any Iskub sodas first, then delete the two Tweakbox folders.
+Uninstalling: sell or throw away any Iskub sodas and every RK 62 rifle, part and magazine first,
+then delete the two Tweakbox folders.
 
 ---
 
