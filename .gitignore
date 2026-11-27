@@ -4,3 +4,7 @@ obj/
 .vs/
 dist/
 tools/.venv/
+*.bak
+*.bak[0-9]*
+*.bak_*
+__pycache__/

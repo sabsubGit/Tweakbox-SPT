@@ -25,6 +25,19 @@ public sealed class TweakboxConfig
     // New items cloned from existing ones (runs before every other feature, so trader stock and loot
     // injection entries can use the new ids). Each entry is SPT's own NewItemFromCloneDetails JSON.
     public CustomItemsConfig CustomItems { get; set; } = new();
+
+    // Named item kits the Testing build's F12 buttons can mail (ignored by release builds).
+    [JsonPropertyName("testKits")]
+    public Dictionary<string, List<TestKitEntry>> TestKits { get; set; } = new();
+}
+
+public sealed class TestKitEntry
+{
+    [JsonPropertyName("tpl")]
+    public string Tpl { get; set; } = string.Empty;
+
+    [JsonPropertyName("count")]
+    public int Count { get; set; } = 1;
 }
 
 public sealed class CustomItemsConfig
@@ -165,6 +178,16 @@ public sealed class TraderStockEntry
     /// Items asked in exchange instead of roubles. When set, priceRub is ignored.
     [JsonPropertyName("barter")]
     public List<BarterCost>? Barter { get; set; }
+
+    /// Sell the item's default preset instead of the bare item: a weapon comes fully assembled,
+    /// the way traders sell every vanilla gun. The price is for the whole thing.
+    [JsonPropertyName("preset")]
+    public bool Preset { get; set; }
+
+    /// Sell one particular preset, fully assembled, instead of the default one - e.g. a second build
+    /// added under the item's customItems "presets" with "default": false. Implies "preset".
+    [JsonPropertyName("presetId")]
+    public string? PresetId { get; set; }
 }
 
 public sealed class BarterCost

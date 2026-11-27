@@ -32,7 +32,73 @@
             "description": "A sparkling lingonberry soda from IDEA. Sweet, fizzy and tart, and by most accounts the best sugary drink still on the shelves in Tarkov, which isn't the compliment it used to be, but it still counts."
           }
         }
-      }
+      },
+
+      // ---------------- RK 62 (Valmet / Sako) parts ----------------
+      // Copies of the AKM bakelite grip with the RK models; "addToSlotsLike" puts them on every rifle that takes that grip.
+      {
+        "newId": "6a1a5cb0d11dea1a1150da10",
+        "newItemName": "pistolgrip_rk62_black",
+        "itemTplToClone": "59e62cc886f77440d40b52a1",
+        "parentId": "55818a684bdc2ddd698b456d",
+        "handbookParentId": "5b5f761f86f774094242f1a1",
+        "handbookPriceRoubles": 1040,
+        "fleaPriceRoubles": 2288,
+        "addToSlotsLike": "59e62cc886f77440d40b52a1",
+        "overrideProperties": {
+          "Prefab": { "path": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_black.bundle", "rcid": "" },
+          "Weight": 0.09
+        },
+        "locales": { "en": { "name": "RK 62 pistol grip", "shortName": "RK 62",
+          "description": "The plastic pistol grip of the Finnish RK 62 assault rifle. Rounded, plain and sturdy - fits AKM-pattern rifles too." } }
+      },
+      {
+        "newId": "6a1a5cb0d11dea1a1150da11",
+        "newItemName": "pistolgrip_rk62_green",
+        "itemTplToClone": "59e62cc886f77440d40b52a1",
+        "parentId": "55818a684bdc2ddd698b456d",
+        "handbookParentId": "5b5f761f86f774094242f1a1",
+        "handbookPriceRoubles": 1650,
+        "fleaPriceRoubles": 3630,
+        "addToSlotsLike": "59e62cc886f77440d40b52a1",
+        "overrideProperties": {
+          "Prefab": { "path": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_green.bundle", "rcid": "" },
+          "Weight": 0.09
+        },
+        "locales": { "en": { "name": "RK 62 M pistol grip (green)", "shortName": "RK 62 M",
+          "description": "The RK 62 pistol grip in the olive green finish of the modernised RK 62 M. Fits AKM-pattern rifles too." } }
+      },
+      {
+        "newId": "6a1a5cb0d11dea1a1150da12",
+        "newItemName": "pistolgrip_rk62_bicycle",
+        "itemTplToClone": "59e62cc886f77440d40b52a1",
+        "parentId": "55818a684bdc2ddd698b456d",
+        "handbookParentId": "5b5f761f86f774094242f1a1",
+        "handbookPriceRoubles": 830,
+        "fleaPriceRoubles": 1826,
+        "addToSlotsLike": "59e62cc886f77440d40b52a1",
+        "overrideProperties": {
+          "Prefab": { "path": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_bicycle.bundle", "rcid": "" },
+          "Weight": 0.08,
+          "Ergonomics": 3
+        },
+        "locales": { "en": { "name": "RK 62 \"bicycle\" grip", "shortName": "Bicycle",
+          "description": "The early RK 62's ribbed round grip, nicknamed the bicycle handle. Conscripts hated it. Fits AKM-pattern rifles too." } }
+      },
+      // RK 62 parts and the two rifles (rifles last: they copy the AKMN slot lists, which by then include the new parts)
+      {"newId": "6a1a5cb0d11dea1a1150da13", "newItemName": "stock_rk62", "itemTplToClone": "59d6514b86f774171a068a08", "parentId": "55818a594bdc2db9688b456a", "handbookParentId": "5b5f757486f774093e6cb507", "handbookPriceRoubles": 3130, "fleaPriceRoubles": 6886, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/stock_rk62.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 tube stock", "shortName": "RK 62", "description": "The RK 62's fixed tube stock with its bent steel butt. Light and simple, if not exactly comfortable."}}, "slots": {"mod_stock": {"remove": true}}},
+      {"newId": "6a1a5cb0d11dea1a1150da14", "newItemName": "mag_rk62_waffle", "itemTplToClone": "5a01c29586f77474660c694c", "parentId": "5448bc234bdc2d3c308b4569", "handbookParentId": "5b5f754a86f774094242f19b", "handbookPriceRoubles": 2520, "fleaPriceRoubles": 5544, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/mag_rk62_waffle.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 7.62x39 30-round \"waffle\" magazine", "shortName": "Waffle", "description": "Finnish polymer 30-round magazine with the waffle pattern on its sides. Fits AKM-pattern rifles too."}}, "addToSlotsLike": "5a01c29586f77474660c694c"},
+      {"newId": "6a1a5cb0d11dea1a1150da15", "newItemName": "gastube_rk62", "itemTplToClone": "59d64ec286f774171d1e0a42", "parentId": "56ea9461d2720b67698b456f", "handbookParentId": "5b5f760586f774093e6cb509", "handbookPriceRoubles": 2090, "fleaPriceRoubles": 4598, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/gastube_rk62.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 gas tube", "shortName": "RK 62", "description": "Gas tube of the RK 62. The RK handguards mount on it."}}, "slots": {"mod_handguard": {"filter": ["6a1a5cb0d11dea1a1150da16", "6a1a5cb0d11dea1a1150da17", "6a1a5cb0d11dea1a1150da18"]}}},
+      {"newId": "6a1a5cb0d11dea1a1150da16", "newItemName": "handguard_rk62_plastic", "itemTplToClone": "5648b0744bdc2d363b8b4578", "parentId": "55818a104bdc2db9688b4569", "handbookParentId": "5b5f75e486f77447ec5d7712", "handbookPriceRoubles": 1300, "fleaPriceRoubles": 2860, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/handguard_rk62_plastic.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 plastic handguard", "shortName": "RK 62", "description": "The ribbed black plastic handguard of later RK 62s. Fits only the RK 62 gas tube."}}},
+      {"newId": "6a1a5cb0d11dea1a1150da17", "newItemName": "handguard_rk62_grater", "itemTplToClone": "5648b0744bdc2d363b8b4578", "parentId": "55818a104bdc2db9688b4569", "handbookParentId": "5b5f75e486f77447ec5d7712", "handbookPriceRoubles": 1570, "fleaPriceRoubles": 3454, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/handguard_rk62_grater.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 \"cheese grater\" handguard", "shortName": "Grater", "description": "The early RK 62's perforated steel handguard - every Finnish conscript knows it as the cheese grater. Fits only the RK 62 gas tube."}}},
+      {"newId": "6a1a5cb0d11dea1a1150da18", "newItemName": "handguard_rk62m", "itemTplToClone": "5c9a07572e221644f31c4b32", "parentId": "55818a104bdc2db9688b4569", "handbookParentId": "5b5f75e486f77447ec5d7712", "handbookPriceRoubles": 17220, "fleaPriceRoubles": 37884, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/handguard_rk62m.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 M handguard (green)", "shortName": "RK 62 M", "description": "M-LOK handguard of the modernised RK 62 M in its olive finish. Rail sections fit in the slots on both sides for lights and lasers, and a foregrip fits underneath. Fits only the RK 62 gas tube."}}},
+      {"newId": "6a1a5cb0d11dea1a1150da19", "newItemName": "cover_rk62", "itemTplToClone": "59d6507c86f7741b846413a2", "parentId": "55818a304bdc2db5418b457d", "handbookParentId": "5b5f764186f77447ec5d7714", "handbookPriceRoubles": 1830, "fleaPriceRoubles": 4026, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/cover_rk62.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 dust cover", "shortName": "RK 62", "description": "The RK 62's top cover with the rear sight at its back end. Fits only RK 62 rifles."}}, "slots": {"mod_mount": {"remove": true}}},
+      {"newId": "6a1a5cb0d11dea1a1150da1a", "newItemName": "cover_rk62m", "itemTplToClone": "5649af884bdc2d1b2b8b4589", "parentId": "55818a304bdc2db5418b457d", "handbookParentId": "5b5f764186f77447ec5d7714", "handbookPriceRoubles": 14700, "fleaPriceRoubles": 32340, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/cover_rk62m.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 M dust cover with rail (green)", "shortName": "RK 62 M", "description": "Top cover of the RK 62 M with a rail for optics, in olive green. Fits only RK 62 rifles."}}},
+      {"newId": "6a1a5cb0d11dea1a1150da1b", "newItemName": "muzzle_rk62_flashhider", "itemTplToClone": "5a0d716f1526d8000d26b1e2", "parentId": "550aa4bf4bdc2dd6348b456b", "handbookParentId": "5b5f724c86f774093f2ecf15", "handbookPriceRoubles": 1130, "fleaPriceRoubles": 2486, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/muzzle_rk62_flashhider.bundle", "rcid": ""}}, "locales": {"en": {"name": "RK 62 7.62x39 flash hider", "shortName": "RK 62", "description": "Three-pronged flash hider of the RK 62 with the bayonet lug underneath. Same thread as AKM-pattern rifles."}}, "addToSlotsLike": "5a0d716f1526d8000d26b1e2"},
+      {"newId": "6a1a5cb0d11dea1a1150da1c", "newItemName": "muzzle_rk62m_flashhider", "itemTplToClone": "5a34fd2bc4a282329a73b4c5", "parentId": "550aa4bf4bdc2dd6348b456b", "handbookParentId": "5b5f724c86f774093f2ecf15", "handbookPriceRoubles": 8610, "fleaPriceRoubles": 18942, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/muzzle_rk62m_flashhider.bundle", "rcid": ""}}, "locales": {"en": {"name": "Ase Utra RK 62 M 7.62x39 flash hider (green)", "shortName": "RK 62 M", "description": "Quick-attach three-pronged flash hider of the RK 62 M, made by Ase Utra. The RK 62 M suppressor locks onto it. Same thread as AKM-pattern rifles."}}, "addToSlotsLike": "5a0d716f1526d8000d26b1e2", "slots": {"mod_muzzle": {"filter": ["6a1a5cb0d11dea1a1150da1d"]}}},
+      {"newId": "6a1a5cb0d11dea1a1150da1d", "newItemName": "silencer_rk62m", "itemTplToClone": "673f0a38259f5945d70e43a6", "parentId": "550aa4cd4bdc2dd8348b456c", "handbookParentId": "5b5f731a86f774093e6cb4f9", "handbookPriceRoubles": 77390, "fleaPriceRoubles": 92900, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/silencer_rk62m.bundle", "rcid": ""}}, "locales": {"en": {"name": "Ase Utra RK 62 M sound suppressor (green)", "shortName": "RK 62 M", "description": "Compact quick-attach suppressor for the RK 62 M, in the green finish. Locks onto the Ase Utra RK 62 M flash hider."}}},
+      {"newId": "6a1a5cb0d11dea1a1150da1e", "newItemName": "weapon_valmet_rk62_762x39", "itemTplToClone": "5a0ec13bfcdbcb00165aa685", "parentId": "5447b5f14bdc2d61278b4567", "handbookParentId": "5b5f78fc86f77409407a7f90", "handbookPriceRoubles": 34000, "fleaPriceRoubles": 74800, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_container.bundle", "rcid": ""}}, "locales": {"en": {"name": "Valmet RK 62 7.62x39 assault rifle", "shortName": "RK 62", "description": "The Finnish service rifle since 1965: an AK-pattern rifle refined by Valmet and Sako, with a tube stock, the rear sight on the dust cover and the famous cheese grater handguard. Takes AKM-pattern magazines, grips, stocks and muzzle devices, and its side rail takes AK-style scope mounts."}}, "slots": {"mod_gas_block": {"filter": ["6a1a5cb0d11dea1a1150da15"]}, "mod_reciever": {"filter": ["6a1a5cb0d11dea1a1150da19", "6a1a5cb0d11dea1a1150da1a"]}, "mod_stock": {"add": ["6a1a5cb0d11dea1a1150da13"]}, "mod_sight_rear": {"remove": true}, "mod_sight_front": {"remove": true}, "mod_launcher": {"remove": true}}, "presets": [{"id": "6a1a5cb0d11dea1a1150db10", "name": "RK 62 default", "default": true, "items": [{"id": "6a1a5cb0d11dea1a1150dc00", "tpl": "6a1a5cb0d11dea1a1150da1e"}, {"id": "6a1a5cb0d11dea1a1150dc01", "tpl": "6a1a5cb0d11dea1a1150da15", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_gas_block"}, {"id": "6a1a5cb0d11dea1a1150dc02", "tpl": "6a1a5cb0d11dea1a1150da17", "parent": "6a1a5cb0d11dea1a1150dc01", "slot": "mod_handguard"}, {"id": "6a1a5cb0d11dea1a1150dc03", "tpl": "6a1a5cb0d11dea1a1150da19", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_reciever"}, {"id": "6a1a5cb0d11dea1a1150dc04", "tpl": "6a1a5cb0d11dea1a1150da10", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_pistol_grip"}, {"id": "6a1a5cb0d11dea1a1150dc05", "tpl": "6a1a5cb0d11dea1a1150da13", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_stock"}, {"id": "6a1a5cb0d11dea1a1150dc06", "tpl": "6a1a5cb0d11dea1a1150da14", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_magazine"}, {"id": "6a1a5cb0d11dea1a1150dc07", "tpl": "6a1a5cb0d11dea1a1150da1b", "parent": "6a1a5cb0d11dea1a1150dc00", "slot": "mod_muzzle"}]}]},
+      {"newId": "6a1a5cb0d11dea1a1150da1f", "newItemName": "weapon_valmet_rk62m_762x39", "itemTplToClone": "5a0ec13bfcdbcb00165aa685", "parentId": "5447b5f14bdc2d61278b4567", "handbookParentId": "5b5f78fc86f77409407a7f90", "handbookPriceRoubles": 40000, "fleaPriceRoubles": 88000, "overrideProperties": {"Prefab": {"path": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_container.bundle", "rcid": ""}}, "locales": {"en": {"name": "Valmet RK 62 M 7.62x39 assault rifle (green)", "shortName": "RK 62 M", "description": "Finland's RK 62, modernised by the Finnish Defence Forces so the proven Valmet rifle can serve for decades more, in an olive green finish. The action is the same; what changed is what you can fit to it. It takes any AKM-pattern 7.62x39 magazine, pistol grip and muzzle device. Optics go on the railed dust cover or an AK-style side mount, the M-LOK handguard takes rails, lights, lasers and foregrips, AR-15 stocks fit with a buffer tube adapter, and the Ase Utra flash hider locks on the quick-attach RK 62 M suppressor. The older RK 62 handguards and dust cover fit too."}}, "slots": {"mod_gas_block": {"filter": ["6a1a5cb0d11dea1a1150da15"]}, "mod_reciever": {"filter": ["6a1a5cb0d11dea1a1150da19", "6a1a5cb0d11dea1a1150da1a"]}, "mod_stock": {"add": ["6a1a5cb0d11dea1a1150da13"]}, "mod_sight_rear": {"remove": true}, "mod_sight_front": {"remove": true}, "mod_launcher": {"remove": true}}, "presets": [{"id": "6a1a5cb0d11dea1a1150db20", "name": "RK 62 M default", "default": true, "items": [{"id": "6a1a5cb0d11dea1a1150dd00", "tpl": "6a1a5cb0d11dea1a1150da1f"}, {"id": "6a1a5cb0d11dea1a1150dd01", "tpl": "6a1a5cb0d11dea1a1150da15", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_gas_block"}, {"id": "6a1a5cb0d11dea1a1150dd02", "tpl": "6a1a5cb0d11dea1a1150da18", "parent": "6a1a5cb0d11dea1a1150dd01", "slot": "mod_handguard"}, {"id": "6a1a5cb0d11dea1a1150dd03", "tpl": "6a1a5cb0d11dea1a1150da1a", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_reciever"}, {"id": "6a1a5cb0d11dea1a1150dd04", "tpl": "6a1a5cb0d11dea1a1150da11", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_pistol_grip"}, {"id": "6a1a5cb0d11dea1a1150dd05", "tpl": "6a1a5cb0d11dea1a1150da13", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_stock"}, {"id": "6a1a5cb0d11dea1a1150dd06", "tpl": "6a1a5cb0d11dea1a1150da14", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_magazine"}, {"id": "6a1a5cb0d11dea1a1150dd07", "tpl": "6a1a5cb0d11dea1a1150da1c", "parent": "6a1a5cb0d11dea1a1150dd00", "slot": "mod_muzzle"}]}, {"id": "6a1a5cb0d11dea1a1150db21", "name": "RK 62 M Skier build", "default": false, "items": [{"id": "6a1a5cb0d11dea1a1150de00", "tpl": "6a1a5cb0d11dea1a1150da1f"}, {"id": "6a1a5cb0d11dea1a1150de01", "tpl": "6a1a5cb0d11dea1a1150da15", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_gas_block"}, {"id": "6a1a5cb0d11dea1a1150de02", "tpl": "6a1a5cb0d11dea1a1150da18", "parent": "6a1a5cb0d11dea1a1150de01", "slot": "mod_handguard"}, {"id": "6a1a5cb0d11dea1a1150de03", "tpl": "5b7be4895acfc400170e2dd5", "parent": "6a1a5cb0d11dea1a1150de02", "slot": "mod_foregrip"}, {"id": "6a1a5cb0d11dea1a1150de04", "tpl": "661e52415be02310ed07a07a", "parent": "6a1a5cb0d11dea1a1150de03", "slot": "mod_foregrip"}, {"id": "6a1a5cb0d11dea1a1150de05", "tpl": "6a1a5cb0d11dea1a1150da1a", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_reciever"}, {"id": "6a1a5cb0d11dea1a1150de06", "tpl": "6165ac8c290d254f5e6b2f6c", "parent": "6a1a5cb0d11dea1a1150de05", "slot": "mod_scope"}, {"id": "6a1a5cb0d11dea1a1150de07", "tpl": "6a1a5cb0d11dea1a1150da11", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_pistol_grip"}, {"id": "6a1a5cb0d11dea1a1150de08", "tpl": "6a1a5cb0d11dea1a1150da14", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_magazine"}, {"id": "6a1a5cb0d11dea1a1150de09", "tpl": "6a1a5cb0d11dea1a1150da1c", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_muzzle"}, {"id": "6a1a5cb0d11dea1a1150de0a", "tpl": "5649b2314bdc2d79388b4576", "parent": "6a1a5cb0d11dea1a1150de00", "slot": "mod_stock"}, {"id": "6a1a5cb0d11dea1a1150de0b", "tpl": "5c0faeddd174af02a962601f", "parent": "6a1a5cb0d11dea1a1150de0a", "slot": "mod_stock"}, {"id": "6a1a5cb0d11dea1a1150de0c", "tpl": "58d2947686f774485c6a1ee5", "parent": "6a1a5cb0d11dea1a1150de0b", "slot": "mod_stock_000"}]}]}
     ]
   },
   "fleaUnban": {
@@ -95,7 +161,25 @@
         "comment": "IDEA ISKUB lingonberry soda (barter)",
         "loyaltyLevel": 3,
         "barter": [ { "id": "5b4335ba86f7744d2837a264", "count": 1 } ] // Medical bloodset
-      }
+      },
+      // Valmet RK 62 family at Skier: Finnish service rifles smuggled over the border. RK 62 and its classic parts at LL2,
+      // the modernised RK 62 M and its parts at LL3, the suppressor at LL4. Prices a little above the AK equivalents.
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1e", "comment": "Valmet RK 62 - assembled (cheese grater, tube stock, waffle magazine)", "priceRub": 49800, "loyaltyLevel": 2, "preset": true },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da13", "comment": "RK 62 tube stock", "priceRub": 3600, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da10", "comment": "RK 62 pistol grip", "priceRub": 1200, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da12", "comment": "RK 62 \"bicycle\" grip", "priceRub": 950, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da17", "comment": "RK 62 \"cheese grater\" handguard", "priceRub": 1800, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da16", "comment": "RK 62 plastic handguard", "priceRub": 1500, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da15", "comment": "RK 62 gas tube", "priceRub": 2400, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da19", "comment": "RK 62 dust cover", "priceRub": 2100, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1b", "comment": "RK 62 flash hider", "priceRub": 1300, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da14", "comment": "RK 62 \"waffle\" magazine", "priceRub": 2900, "loyaltyLevel": 2 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1f", "comment": "Valmet RK 62 M - user's build (stubby grip on an M-LOK rail, UTG 1x30 red dot, Magpul MOE stock)", "priceRub": 107500, "loyaltyLevel": 3, "presetId": "6a1a5cb0d11dea1a1150db21" },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da18", "comment": "RK 62 M handguard (M-LOK)", "priceRub": 19800, "loyaltyLevel": 3 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1a", "comment": "RK 62 M dust cover with rail", "priceRub": 16900, "loyaltyLevel": 3 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da11", "comment": "RK 62 M pistol grip (green)", "priceRub": 1900, "loyaltyLevel": 3 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1c", "comment": "Ase Utra RK 62 M flash hider", "priceRub": 9900, "loyaltyLevel": 3 },
+      { "trader": "Skier", "id": "6a1a5cb0d11dea1a1150da1d", "comment": "Ase Utra RK 62 M suppressor", "priceRub": 89000, "loyaltyLevel": 4 }
     ]
   },
 
@@ -234,6 +318,29 @@
         ],
         "weightFactor": 1.0
       }
+    ]
+  },
+
+  // Testing build only: the F12 "Mail me the RK 62 test kit" button mails everything listed here in one message.
+  "testKits": {
+    "rk62": [
+      { "tpl": "6a1a5cb0d11dea1a1150da1e", "count": 1 },   // Valmet RK 62 (ready-made)
+      { "tpl": "6a1a5cb0d11dea1a1150da1f", "count": 1 },   // Valmet RK 62 M (ready-made)
+      { "tpl": "6a1a5cb0d11dea1a1150da10", "count": 1 },   // RK 62 grip
+      { "tpl": "6a1a5cb0d11dea1a1150da11", "count": 1 },   // RK 62 M grip
+      { "tpl": "6a1a5cb0d11dea1a1150da12", "count": 1 },   // bicycle grip
+      { "tpl": "6a1a5cb0d11dea1a1150da13", "count": 1 },   // tube stock
+      { "tpl": "6a1a5cb0d11dea1a1150da15", "count": 1 },   // gas tube
+      { "tpl": "6a1a5cb0d11dea1a1150da16", "count": 1 },   // plastic handguard
+      { "tpl": "6a1a5cb0d11dea1a1150da17", "count": 1 },   // cheese grater
+      { "tpl": "6a1a5cb0d11dea1a1150da18", "count": 1 },   // RK 62 M handguard
+      { "tpl": "6a1a5cb0d11dea1a1150da19", "count": 1 },   // dust cover
+      { "tpl": "6a1a5cb0d11dea1a1150da1a", "count": 1 },   // RK 62 M dust cover
+      { "tpl": "6a1a5cb0d11dea1a1150da1b", "count": 1 },   // RK 62 flash hider
+      { "tpl": "6a1a5cb0d11dea1a1150da1c", "count": 1 },   // RK 62 M flash hider
+      { "tpl": "6a1a5cb0d11dea1a1150da1d", "count": 1 },   // RK 62 M suppressor
+      { "tpl": "6a1a5cb0d11dea1a1150da14", "count": 4 },   // waffle magazines
+      { "tpl": "5656d7c34bdc2d9d198b4587", "count": 180 }   // 7.62x39 PS gzh
     ]
   }
 }

@@ -20,10 +20,12 @@ OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
 "$REPO/tools/.venv/bin/python" "$REPO/tools/build_iskub_bundles.py" "$GAME" "$OBJ_DIR" "$TEX_DIR" "$OUT"
 
-rm -rf "$REPO/bundles" && cp -r "$OUT/bundles" "$REPO/bundles"
-cp "$OUT/bundles.json" "$REPO/bundles.json"
-rm -rf "$MOD/bundles" && cp -r "$REPO/bundles" "$MOD/bundles"
-cp "$REPO/bundles.json" "$MOD/bundles.json"
+# only the Iskub's own files are replaced - other custom items (RK 62 parts) share the bundles folder and manifest
+PREFIX=assets/content/weapons/usable_items/item_iskub/
+for DEST in "$REPO" "$MOD"; do
+    rm -rf "$DEST/bundles/$PREFIX" && mkdir -p "$DEST/bundles" && cp -r "$OUT/bundles/." "$DEST/bundles/"
+    python3 "$REPO/tools/merge_manifest.py" "$DEST/bundles.json" "$OUT/bundles.json" "$PREFIX"
+done
 echo "Deployed bundles to $MOD"
 
 # EFT keeps rendered inventory icons on disk and never notices a changed texture, so drop the Iskub's.

@@ -32,6 +32,7 @@ public sealed class TweakboxOnLoad(
     LocationTable locationTable,
     TradersTable tradersTable,
     BotTable botTable,
+    GlobalTable globalTable,
     ISptLogger<TweakboxOnLoad> logger
 ) : IOnLoad
 {
@@ -539,6 +540,12 @@ public sealed class TweakboxOnLoad(
 
             // Cash offers keep their original id; barters get their own so both can coexist.
             string salt = entry.Barter is { Count: > 0 } ? "barter:" + string.Join(",", entry.Barter.Select(b => $"{b.Id}x{b.Count}")) : "";
+            bool namedPreset = !string.IsNullOrEmpty(entry.PresetId);
+            if (namedPreset)
+            {
+                // A specific build gets its own offer id, so it can sit next to the default one.
+                salt += "preset:" + entry.PresetId;
+            }
             MongoId offerId = StableId(trader.Base!.Id, tpl, salt);
             if (assort.Items.Any(i => i.Id == offerId))
             {
@@ -560,6 +567,62 @@ public sealed class TweakboxOnLoad(
                 },
             });
 
+            int parts = 0;
+            if (entry.Preset || namedPreset)
+            {
+                // The named preset, else the item's default one (e.g. registered by customItems "presets"): its root
+                // becomes the offer, its parts hang under it with ids derived from the offer, so restarts don't
+                // duplicate them.
+                Preset? preset;
+                if (namedPreset)
+                {
+                    globalTable.ItemPresets.TryGetValue(new MongoId(entry.PresetId!), out preset);
+                    if (preset?.Items is { Count: > 0 } && preset.Items[0].Template != tpl)
+                    {
+                        logger.Warning($"Tweakbox: trader stock - preset {entry.PresetId} is not a {item.Name} build.");
+                        preset = null;
+                    }
+                }
+                else
+                {
+                    preset = globalTable.ItemPresets.Values.FirstOrDefault(p => p.Encyclopedia == tpl)
+                        ?? globalTable.ItemPresets.Values.FirstOrDefault(p => p.Items is { Count: > 0 } && p.Items[0].Template == tpl);
+                }
+
+                if (preset?.Items is not { Count: > 1 })
+                {
+                    logger.Warning(
+                        $"Tweakbox: trader stock - no preset with parts for {item.Name}"
+                            + (namedPreset ? $" (preset {entry.PresetId})" : "")
+                            + ", selling it bare."
+                    );
+                }
+                else
+                {
+                    Dictionary<string, MongoId> newIds = new() { [preset.Items[0].Id.ToString()] = offerId };
+                    for (int i = 1; i < preset.Items.Count; i++)
+                    {
+                        newIds[preset.Items[i].Id.ToString()] = StableId(trader.Base!.Id, tpl, salt + "part:" + i);
+                    }
+                    for (int i = 1; i < preset.Items.Count; i++)
+                    {
+                        Item part = preset.Items[i];
+                        if (part.ParentId == null || !newIds.TryGetValue(part.ParentId, out MongoId parentId))
+                        {
+                            continue;
+                        }
+                        assort.Items.Add(new Item
+                        {
+                            Id = newIds[part.Id.ToString()],
+                            Template = part.Template,
+                            ParentId = parentId.ToString(),
+                            SlotId = part.SlotId,
+                        });
+                        parts++;
+                    }
+                }
+            }
+
             assort.BarterScheme[offerId] = [cost];
             assort.LoyalLevelItems[offerId] = entry.LoyaltyLevel;
 
@@ -567,8 +630,9 @@ public sealed class TweakboxOnLoad(
                 ? string.Join(" + ", entry.Barter.Select(b => $"{b.Count:0.##}x {templateTable.Items[new MongoId(b.Id)].Name}"))
                 : $"{entry.Price ?? entry.PriceRub:N0} {entry.Currency.ToUpperInvariant()}";
             logger.Success(
-                $"Tweakbox: trader stock - {trader.Base.Nickname} now sells {entry.Comment ?? item.Name} "
-                    + $"at LL{entry.LoyaltyLevel} for {price}."
+                $"Tweakbox: trader stock - {trader.Base.Nickname} now sells {entry.Comment ?? item.Name}"
+                    + (parts > 0 ? $" (assembled, {parts} parts)" : "")
+                    + $" at LL{entry.LoyaltyLevel} for {price}."
             );
         }
     }

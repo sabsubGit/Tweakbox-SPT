@@ -19,6 +19,12 @@ using SPTarkov.Server.Core.Utils.Cloners;
 
 namespace Tweakbox;
 
+public sealed class TweakboxKitRequest : IRequestData
+{
+    [JsonPropertyName("kit")]
+    public string Kit { get; set; } = string.Empty;
+}
+
 public sealed class TweakboxGiveRequest : IRequestData
 {
     [JsonPropertyName("tpl")]
@@ -40,20 +46,67 @@ public sealed class TweakboxDebugGive(
 {
     public void Send(MongoId sessionId, TweakboxGiveRequest request)
     {
-        if (request.Tpl.Length != 24 || !request.Tpl.All(Uri.IsHexDigit))
+        List<Item>? items = Build(request.Tpl, request.Count, out TemplateItem? template, out int count);
+        if (items == null || template == null)
         {
-            logger.Warning($"Tweakbox debug give: '{request.Tpl}' is not an item id, ignoring.");
             return;
         }
 
-        MongoId tpl = new(request.Tpl);
-        if (!templateTable.Items.TryGetValue(tpl, out TemplateItem? template))
+        itemHelper.SetFoundInRaid(items);
+        mailSendService.SendSystemMessageToPlayer(sessionId, $"TWEAKBOX TEST DELIVERY: {count}x {template.Name}", items, 172800L);
+        logger.Success($"Tweakbox debug give: mailed {count}x {template.Name} to {sessionId}.");
+    }
+
+    // Every entry of a named kit from config.json "testKits", delivered as one message.
+    public void SendKit(MongoId sessionId, TweakboxKitRequest request)
+    {
+        TweakboxConfig? config = TweakboxOnLoad.ReadConfig();
+        if (config == null || !config.TestKits.TryGetValue(request.Kit, out List<TestKitEntry>? entries))
         {
-            logger.Warning($"Tweakbox debug give: item {request.Tpl} is not in the database, ignoring.");
+            logger.Warning($"Tweakbox debug kit: no test kit called '{request.Kit}' in config.json.");
             return;
         }
 
-        int count = Math.Clamp(request.Count, 1, 100);
+        List<Item> all = [];
+        foreach (TestKitEntry entry in entries)
+        {
+            List<Item>? items = Build(entry.Tpl, entry.Count, out _, out _);
+            if (items != null)
+            {
+                all.AddRange(items);
+            }
+        }
+
+        if (all.Count == 0)
+        {
+            return;
+        }
+
+        itemHelper.SetFoundInRaid(all);
+        mailSendService.SendSystemMessageToPlayer(sessionId, $"TWEAKBOX TEST KIT: {request.Kit}", all, 172800L);
+        logger.Success($"Tweakbox debug kit: mailed the '{request.Kit}' kit ({entries.Count} entries) to {sessionId}.");
+    }
+
+    private List<Item>? Build(string tplText, int requested, out TemplateItem? template, out int count)
+    {
+        template = null;
+        count = 0;
+        if (tplText.Length != 24 || !tplText.All(Uri.IsHexDigit))
+        {
+            logger.Warning($"Tweakbox debug give: '{tplText}' is not an item id, ignoring.");
+            return null;
+        }
+
+        MongoId tpl = new(tplText);
+        if (!templateTable.Items.TryGetValue(tpl, out template))
+        {
+            logger.Warning($"Tweakbox debug give: item {tplText} is not in the database, ignoring.");
+            return null;
+        }
+
+        // Stackable things (money, ammo) can come in big amounts; whole items/guns are capped at 100.
+        bool stackable = template.Properties?.StackMaxSize > 1;
+        count = Math.Clamp(requested, 1, stackable ? 5_000_000 : 100);
         List<Item> items = [];
 
         // Same three cases SPT's give command handles: a default preset (weapons with their parts),
@@ -80,9 +133,7 @@ public sealed class TweakboxDebugGive(
             items.AddRange(itemHelper.SplitStack(stack));
         }
 
-        itemHelper.SetFoundInRaid(items);
-        mailSendService.SendSystemMessageToPlayer(sessionId, $"TWEAKBOX TEST DELIVERY: {count}x {template.Name}", items, 172800L);
-        logger.Success($"Tweakbox debug give: mailed {count}x {template.Name} to {sessionId}.");
+        return items;
     }
 }
 
@@ -99,6 +150,14 @@ public sealed class TweakboxDebugRouter : StaticRouter
                     (url, info, sessionId, output, cancellationToken) =>
                     {
                         give.Send(sessionId, info);
+                        return new ValueTask<string>(http.NullResponse());
+                    }
+                ),
+                new RouteAction<TweakboxKitRequest>(
+                    "/tweakbox/debug/kit",
+                    (url, info, sessionId, output, cancellationToken) =>
+                    {
+                        give.SendKit(sessionId, info);
                         return new ValueTask<string>(http.NullResponse());
                     }
                 ),

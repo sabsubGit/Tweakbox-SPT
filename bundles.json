@@ -39,6 +39,248 @@
         "cubemaps",
         "shaders"
       ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_black.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_green.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/pistolgrip_rk62_bicycle.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/stock_rk62.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/gastube_rk62.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/items/mods/tweakbox_rk62/gastube_rk62_textures.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/gastube_rk62_textures.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62_plastic.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62_grater.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/cover_rk62.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/cover_rk62m.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/muzzle_rk62_flashhider.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/muzzle_rk62m_flashhider.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/items/mods/tweakbox_rk62/muzzle_rk62m_flashhider_textures.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/muzzle_rk62m_flashhider_textures.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/silencer_rk62m.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62m.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_textures.bundle",
+        "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_nrm.bundle",
+        "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_mesh.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_mesh.bundle",
+      "dependencyKeys": [
+        "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_textures.bundle",
+        "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_nrm.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_textures.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/handguard_rk62m_nrm.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_container.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/audio/banks/akm.bundle",
+        "assets/content/audio/banks/vpo209.bundle",
+        "assets/content/audio/blendoptions/assets.bundle",
+        "assets/content/audio/weapons/ak74.bundle",
+        "assets/content/audio/weapons/akm.bundle",
+        "assets/content/audio/weapons/akm/instrumental.bundle",
+        "assets/content/audio/weapons/akm/vpo209.bundle",
+        "assets/content/audio/weapons/generic",
+        "assets/content/items/mods/handguards/handguard_ak_izhmash_akm_std_wood_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_136_lod0_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_209_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akms_std_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akmsn_std_textures.bundle",
+        "assets/content/weapons/additional_hands/client_assets.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_meshes.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_textures.bundle",
+        "assets/content/weapons/akm/weapon_molot_akm_vpo_209_366tkm_container.bundle",
+        "assets/content/weapons/animations/simple_animations.bundle",
+        "assets/content/weapons/animations/spirit_animations.bundle",
+        "assets/content/weapons/weapon_root_anim_fix.bundle",
+        "assets/content/weapons/wip/kibas tuning prefabs/muzzlejets_templates/default_assets.bundle",
+        "assets/systems/effects/heathaze/defaultheathaze.bundle",
+        "assets/systems/effects/muzzleflash/muzzleflash.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_meshes.bundle",
+      "dependencyKeys": [
+        "assets/content/items/mods/handguards/handguard_ak_izhmash_akm_std_wood_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_136_lod0_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_209_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akms_std_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akmsn_std_textures.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_textures.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62_762x39_textures.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_container.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "assets/content/audio/banks/akm.bundle",
+        "assets/content/audio/banks/vpo209.bundle",
+        "assets/content/audio/blendoptions/assets.bundle",
+        "assets/content/audio/weapons/ak74.bundle",
+        "assets/content/audio/weapons/akm.bundle",
+        "assets/content/audio/weapons/akm/instrumental.bundle",
+        "assets/content/audio/weapons/akm/vpo209.bundle",
+        "assets/content/audio/weapons/generic",
+        "assets/content/items/mods/handguards/handguard_ak_izhmash_akm_std_wood_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_136_lod0_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_209_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akms_std_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akmsn_std_textures.bundle",
+        "assets/content/weapons/additional_hands/client_assets.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_meshes.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_textures.bundle",
+        "assets/content/weapons/akm/weapon_molot_akm_vpo_209_366tkm_container.bundle",
+        "assets/content/weapons/animations/simple_animations.bundle",
+        "assets/content/weapons/animations/spirit_animations.bundle",
+        "assets/content/weapons/weapon_root_anim_fix.bundle",
+        "assets/content/weapons/wip/kibas tuning prefabs/muzzlejets_templates/default_assets.bundle",
+        "assets/systems/effects/heathaze/defaultheathaze.bundle",
+        "assets/systems/effects/muzzleflash/muzzleflash.bundle",
+        "assets/systems/effects/smoke.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_meshes.bundle",
+      "dependencyKeys": [
+        "assets/content/items/mods/handguards/handguard_ak_izhmash_akm_std_wood_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_136_lod0_textures.bundle",
+        "assets/content/items/mods/handguards/handguard_ak_molot_vepr_km_vpo_209_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akms_std_textures.bundle",
+        "assets/content/items/mods/stocks/stock_akms_izhmash_akmsn_std_textures.bundle",
+        "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_textures.bundle",
+        "cubemaps",
+        "shaders"
+      ]
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/weapon_valmet_rk62m_762x39_textures.bundle",
+      "dependencyKeys": []
+    },
+    {
+      "key": "assets/content/items/mods/tweakbox_rk62/mag_rk62_waffle.bundle",
+      "dependencyKeys": [
+        "assets/commonassets/physics/physicsmaterials.bundle",
+        "cubemaps",
+        "shaders"
+      ]
     }
   ]
 }
